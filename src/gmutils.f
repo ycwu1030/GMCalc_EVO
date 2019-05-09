@@ -34,3 +34,31 @@ C Local variables:
 
       RETURN
       END
+
+
+      FUNCTION RANDOM_RANGE (LBOUND,UBOUND)
+        
+      IMPLICIT NONE
+      DOUBLE PRECISION LBOUND,UBOUND
+      DOUBLE PRECISION LEN
+      DOUBLE PRECISION RANDOM_RANGE
+      DOUBLE PRECISION T
+         
+         
+      LEN=UBOUND-LBOUND
+      CALL RANDOM_NUMBER(T)
+      RANDOM_RANGE=LBOUND+LEN*T
+
+      return
+      end
+
+      SUBROUTINE INIT_RANDOM_SEED()
+          INTEGER :: i, n, clock
+          INTEGER, DIMENSION(:), ALLOCATABLE :: seed
+          CALL RANDOM_SEED(size=n)
+          ALLOCATE(seed(n))
+          CALL SYSTEM_CLOCK(COUNT=clock)
+          seed = clock + 37 * (/ (i-1, i=1, n) /)
+          CALL RANDOM_SEED(PUT=seed)
+          DEALLOCATE(seed)
+      END SUBROUTINE

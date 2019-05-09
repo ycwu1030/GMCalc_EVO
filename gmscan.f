@@ -106,6 +106,8 @@ C Local variables:
       INTEGER SMLIKE
       DOUBLE PRECISION KV, KF, KGAM, KZGAM, DKGAM, DKZGAM
       DOUBLE PRECISION PI
+      DOUBLE PRECISION RANDOM_RANGE
+      EXTERNAL RANDOM_RANGE
       PI = 4.D0*DATAN(1.D0)
       CALL PRINT_BANNER
 C==================================================================
@@ -149,8 +151,12 @@ C==================================================================
 C Start the loop over scan points
       TRIALS = 0
       POINTS = 0
+      CALL INIT_RANDOM_SEED()
  400  CALL RANDOM_NUMBER(X)
       TRIALS = TRIALS + 1
+      IF (MOD(TRIALS,200000).EQ.0) THEN
+         CALL INIT_RANDOM_SEED()
+      ENDIF
 C============ setting up the scan ranges ==========================
       X(1) = -200.D0 + X(1)*(200.D0+MU3MAX)
       MU3SQ = X(1)*DABS(X(1))

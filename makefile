@@ -3,8 +3,8 @@
 # http://people.physics.carleton.ca/~logan/gmcalc/
 #
 
-# LT = /Users/ycwu/Library/Mathematica/Applications/LoopTools-2.14/x86_64-Darwin
-LT = /home/ycwu/Workings/SUPPORTS/LoopTools/2.15
+LT = /Users/ycwu/Library/Mathematica/Applications/LoopTools-2.14/x86_64-Darwin
+#LT = /home/ycwu/Workings/SUPPORTS/LoopTools/2.15
 
 SRCDIR := src
 FF = gfortran
