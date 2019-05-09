@@ -16,6 +16,7 @@ C The mixing angle alpha is defined according to
 C    h = cos(alpha) H1 - sin(alpha) H1'
 C    H = sin(alpha) H1 + cos(alpha) H1',
 C where H1 is the doublet and H1' is the custodial singlet of the triplet.
+C YCWU: But at last, I always define the MHL is the SM 125 Higgs, MHH is the other one.
       IMPLICIT NONE
 C Common blocks:
       DOUBLE PRECISION MU2SQ,MU3SQ,LAMBDA1,LAMBDA2,LAMBDA3,LAMBDA4,
@@ -40,6 +41,7 @@ C Local variables:
       DOUBLE PRECISION SIN2A, COS2A
       INTEGER I
       DOUBLE PRECISION PI
+      DOUBLE PRECISION DMHL,DMHH,MTEMP
       PI = 4.D0*DATAN(1.D0)
 
       POSMSQOK = 1
@@ -117,6 +119,17 @@ C check the sign of cos(2alpha):
          ELSE
             ALPHA = -PI/2.D0 - ALPHA
          ENDIF
+      ENDIF
+C In order to always keep MHL as the 125 Higgs. Need to do some exchange
+      DMHL=ABS(MHL-125.D0)
+      DMHH=ABS(MHH-125.D0)
+      IF ((POSMSQOK.EQ.1).AND.(DMHL.GT.DMHH)) THEN
+C If PSOMSQOK and MHH is closer to 125, we exchange the role of h and H
+         MTEMP=MHL
+         MHL=MHH
+         MHH=MTEMP
+C The ALPHA is also changed accordingly. (But in this situation, the definition of H has an extra minus sign)
+         ALPHA = ALPHA + PI/2.D0
       ENDIF
 
       RETURN
