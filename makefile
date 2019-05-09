@@ -74,5 +74,5 @@ $(SRCDIR)/heteroloops-dummy.o: $(SRCDIR)/heteroloops-dummy.F
 	$(FF) $(FFLAG) -c $< -o $@
 
 clean:
-	rm *.x
-	rm $(SRCDIR)/*.o
+	rm -f *.x
+	rm -f $(SRCDIR)/*.o
