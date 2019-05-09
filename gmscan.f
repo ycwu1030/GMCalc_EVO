@@ -114,6 +114,8 @@ C Local variables:
       DOUBLE PRECISION KV, KF, KGAM, KZGAM, DKGAM, DKZGAM, MHOTHER
       DOUBLE PRECISION M11SQ, M12SQ, M22SQ
       DOUBLE PRECISION PI
+      DOUBLE PRECISION RANDOM_RANGE
+      EXTERNAL RANDOM_RANGE
       PI = 4.D0*DATAN(1.D0)
       CALL PRINT_BANNER
 C==================================================================
@@ -170,8 +172,12 @@ C defined in arXiv:2003.05536.
 C Start the loop over scan points
       TRIALS = 0
       POINTS = 0
+      CALL INIT_RANDOM_SEED()
  400  CALL RANDOM_NUMBER(X)
       TRIALS = TRIALS + 1
+      IF (MOD(TRIALS,200000).EQ.0) THEN
+         CALL INIT_RANDOM_SEED()
+      ENDIF
 C============ setting up the scan ranges ==========================
 c      X(1) = -200.D0 + X(1)*(200.D0+MU3MAX)
 c      MU3SQ = X(1)*DABS(X(1))
