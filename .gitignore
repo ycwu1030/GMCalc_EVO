@@ -34,3 +34,6 @@
 
 # MacOS
 .DS_Store
+
+# CLUSTER RUNNING FILES
+GMAL/
