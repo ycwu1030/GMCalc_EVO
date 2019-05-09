@@ -1,0 +1,57 @@
+GMCALC -- changes log
+
+2018/09/30 - version 1.4.1 (new inputset):
+	     Added INPUTSET 6 (mh, m5, sin(thetaH), lambda2, lambda3,
+	     lambda4, lambda5, M2).
+
+2018/07/25 - version 1.4.0: 
+	     gmmg5.f now also generates a param_card for the (LO) 
+	     UFO model file with effective vertices for loop-induced 
+	     Higgs decays.
+	     Improved integration speed for scalar decay widths to 
+	     doubly-offshell vector boson pairs.
+             Updated makefile to work with LoopTools 2.15.
+	     Updated S and T parameters to PDG2018 values.
+	     Bug fixed in H3+ --> W- H5++ width calculation.
+	     Offshell H1 -> V* H2 set to zero when V -> H1 H2 is 
+	     possible: formula used was not valid in that region.
+
+2017/08/30 - version 1.3.0:
+	     One-loop decays of H5+ --> W+ gamma, H3+ --> W+ gamma,
+	     and H50 --> Z gamma are now computed as in C.Degrande, 
+	     K.Hartling & H.E.Logan, arXiv:1708.08753.  Computation of 
+	     these decays requires linking LoopTools; see 
+	     www.feynarts.de/looptools/ .  See the makefile for compilation
+	     without LoopTools, i.e., setting these decays to zero.
+
+2016/06/20 - version 1.2.1 (new inputset):
+             Added INPUTSET 5 (mh, mH, sin(thetaH), sin(alpha), lambda2,
+             lambda3, lambda4, lambda5).
+
+2015/11/30 - version 1.2.0:
+             Doubly-offshell H -> V*V* decays implemented for all masses;
+	     numerics validated using HDECAY 6.42 to be good to within 1%.
+             New inputs GAMZ and GAMW are the physical widths of the Z and W.
+	     gmmg5.f updated to produce LO and NLO param-cards for use with 
+	     the corresponding UFO model files.  Widths set to Auto so that
+	     they will be calculated by MadGraph.
+
+2015/08/11 - version 1.1.1 (bug fixes):
+	     Bugs fixed in h, H, H3^0, and H5^0 decays to Z gamma - thanks
+	     to Celine Degrande.
+
+2015/03/26 - version 1.1.0: 
+	     Added INPUTSET 4 (mh, m5, sH, lambda2, lambda3, lambda4, M1, M2).
+	     Changed default EW input parameters to GF, MZ, MW.
+	     Added consistency check for INPUTSET 3.
+
+2015/01/20 - version 1.0.1 (bug fixes):
+	     Fixed the handling of a singular case in the routine that finds
+	     roots of the cubic equation for VCHI in gmspectrum.f - thanks 
+  	     to R. Ruiz for pointing out this bug.
+	     Fixed the code that chooses VCHI positive in gmscan.f.
+
+2014/12/19 - added INPUTSET 3 (physical masses and mixing angles)
+2014/12/15 - changed variable name in param_card.dat (to match FeynRules)
+2014/11/12 - bug fixed in GET_MINMASS in src/gmutils.f
+2014/11/07 - first public version of GMCALC v1.0
