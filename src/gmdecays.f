@@ -50,6 +50,8 @@ C Common blocks:
      .     HLBRH3N, HLBRH3P, HLBRH5N, HLBRH5P, HLBRH5PP, HLWDTH
       INTEGER OFFSHELL, QCDCORRS
       COMMON/DECAYFLAGS/OFFSHELL, QCDCORRS
+      DOUBLE PRECISION KVL, KFL, KGAML, KZGAML, DKGAML, DKZGAML,KWIDTHL
+      COMMON/KAPPASL/KVL,KFL,KGAML,KZGAML,DKGAML,DKZGAML,KWIDTHL
 C Local variables:
       DOUBLE PRECISION HLGAMB, HLGAMTA, HLGAMMU, HLGAMS, HLGAMC, 
      .     HLGAMT, 
@@ -62,6 +64,11 @@ C Local variables:
       DOUBLE PRECISION EE5
       DOUBLE PRECISION SW, CW, PI
       DOUBLE PRECISION MTRUN, MBRUN, MCRUN, MT, MB, MC
+C YCWU: Variables used to record SM values: (Based on that MHL is the 125 Higgs)
+      DOUBLE PRECISION HSMGAMB, HSMGAMTA, HSMGAMMU, HSMGAMS, HSMGAMC, 
+     .     HSMGAMT, 
+     .     HSMGAMG, HSMGAMGA, HSMGAMZGA, HSMGAMW, HSMGAMZ
+      DOUBLE PRECISION HSMGAMTOTAL
 C Functions to be called:
       DOUBLE PRECISION GAMFF, GAMVVOF, GAMVV, GAMWH, GAMZH, GAMHH
       DOUBLE COMPLEX F0, F12, F1, I1, I2
@@ -96,24 +103,38 @@ C HL decays to fermions:  on-shell for now.
      .        * (DELTAQCD(MHL) + DELTATB(MHL))
          HLGAMC = GAMFF(3.D0,MHL,MC,MC,MCRUN/V*KF,0.D0)
      .        * (DELTAQCD(MHL) + DELTATC(MHL))
+         HSMGAMB = GAMFF(3.D0,MHL,MB,MB,MBRUN/V,0.D0)
+     .        * (DELTAQCD(MHL) + DELTATB(MHL))
+         HSMGAMC = GAMFF(3.D0,MHL,MC,MC,MCRUN/V,0.D0)
+     .        * (DELTAQCD(MHL) + DELTATC(MHL))
       ELSE
          HLGAMB = GAMFF(3.D0,MHL,MB,MB,MBRUN/V*KF,0.D0)
          HLGAMC = GAMFF(3.D0,MHL,MC,MC,MCRUN/V*KF,0.D0)
+         HSMGAMB = GAMFF(3.D0,MHL,MB,MB,MBRUN/V,0.D0)
+         HSMGAMC = GAMFF(3.D0,MHL,MC,MC,MCRUN/V,0.D0)
       ENDIF
       HLGAMTA = GAMFF(1.D0,MHL,MTAU,MTAU,MTAU/V*KF,0.D0)
       HLGAMMU = GAMFF(1.D0,MHL,MMU,MMU,MMU/V*KF,0.D0)
       HLGAMS = GAMFF(3.D0,MHL,MS,MS,MS/V*KF,0.D0)
       HLGAMT = GAMFF(3.D0,MHL,MT,MT,MTRUN/V*KF,0.D0)
+      HSMGAMTA = GAMFF(1.D0,MHL,MTAU,MTAU,MTAU/V,0.D0)
+      HSMGAMMU = GAMFF(1.D0,MHL,MMU,MMU,MMU/V,0.D0)
+      HSMGAMS = GAMFF(3.D0,MHL,MS,MS,MS/V,0.D0)
+      HSMGAMT = GAMFF(3.D0,MHL,MT,MT,MTRUN/V,0.D0)
 
 C HL decays to massive gauge bosons: doubly offshell unless switched off
       KV = DCOS(ALPHA)*VPHI/V - 8.D0/DSQRT(3.D0)*DSIN(ALPHA)*VCHI/V
       IF (OFFSHELL.EQ.1) THEN
          HLGAMW = GAMVVOF(1.D0,MHL,MW,MW,GAMW,GAMW,2.D0*MW**2/V*KV)
          HLGAMZ = GAMVVOF(0.5D0,MHL,MZ,MZ,GAMZ,GAMZ,2.D0*MZ**2/V*KV)
+         HSMGAMW = GAMVVOF(1.D0,MHL,MW,MW,GAMW,GAMW,2.D0*MW**2/V)
+         HSMGAMZ = GAMVVOF(0.5D0,MHL,MZ,MZ,GAMZ,GAMZ,2.D0*MZ**2/V)
       ELSE
 C onshell option (OFFSHELL = 0)
          HLGAMW = GAMVV(1.D0,MHL,MW,MW,2.D0*MW**2/V*KV)
          HLGAMZ = GAMVV(0.5D0,MHL,MZ,MZ,2.D0*MZ**2/V*KV)
+         HSMGAMW = GAMVV(1.D0,MHL,MW,MW,2.D0*MW**2/V)
+         HSMGAMZ = GAMVV(0.5D0,MHL,MZ,MZ,2.D0*MZ**2/V)
       ENDIF
 
 C HL decays to vector + scalar (W+H- and W-H+ are summed):
@@ -164,12 +185,17 @@ C SM amplitude for the top loop:
          HLGAMG = RUNALS(MHL,5)**2 * MHL**3 / 128.D0/PI**3 / V**2
      .        * CDABS(AMP)**2
      .        * (1.D0 + EE5*RUNALS(MHL,5)/PI)
+         HSMGAMG = RUNALS(MHL,5)**2 * MHL**3 / 128.D0/PI**3 / V**2
+     .        * CDABS(AT)**2
+     .        * (1.D0 + EE5*RUNALS(MHL,5)/PI)
          RxHLGG = RUNALS(MHL,5) / 4.D0/PI / V
      .        * CDABS(AMP)
      .        * DSQRT(1.D0 + EE5*RUNALS(MHL,5)/PI)
       ELSE
          HLGAMG = ALSMZ**2 * MHL**3 / 128.D0/PI**3 / V**2
      .        * CDABS(AMP)**2
+         HSMGAMG = ALSMZ**2 * MHL**3 / 128.D0/PI**3 / V**2
+     .        * CDABS(AT)**2
          RxHLGG = ALSMZ / 4.D0/PI / V
      .        * CDABS(AMP)
       ENDIF
@@ -190,9 +216,13 @@ C Combine the amplitudes (all are complex in general):
      .     * CDABS(AMP)**2
       RxHLGAGA = ALPHAEM / 2.D0/PI / V
      .     * CDABS(AMP)
+      AMP = AT + AW
+      HSMGAMGA = ALPHAEM**2 * MHL**3 / 256.D0/PI**3 / V**2
+     .     * CDABS(AMP)**2
 C Loop-induced h -> Z gamma coupling:
       IF (MHL.LE.MZ) THEN
          HLGAMZGA = 0.D0
+         HSMGAMZGA = 0.D0
          RxHLZGA = 0.D0
       ELSE
 C SM amplitude for the top loop:
@@ -218,6 +248,9 @@ C Combine the amplitudes (all are complex in general):
      .        * CDABS(AMP)**2 * (1.D0 - MZ**2/MHL**2)**3
          RxHLZGA = ALPHAEM / 2.D0/PI / V
      .        * CDABS(AMP)
+         AMP = AT + AW
+         HSMGAMZGA = ALPHAEM**2 * MHL**3 / 128.D0/PI**3 / V**2
+     .        * CDABS(AMP)**2 * (1.D0 - MZ**2/MHL**2)**3
       ENDIF
 
 C Compute the total width
@@ -225,7 +258,11 @@ C Compute the total width
      .     + HLGAMG + HLGAMGA + HLGAMZGA + HLGAMW + HLGAMZ
      .     + HLGAMWH3P + HLGAMZH3N
      .     + HLGAMH3N + HLGAMH3P + HLGAMH5N + HLGAMH5P + HLGAMH5PP
+      HSMGAMTOTAL = HSMGAMB + HSMGAMTA + HSMGAMMU + HSMGAMS + HSMGAMC + 
+     .     HSMGAMT + 
+     .     HSMGAMG + HSMGAMGA + HSMGAMZGA + HSMGAMW + HSMGAMZ
 
+      KWIDTHL = HLWDTH/HSMGAMTOTAL
 C Compute the BRs
       HLBRB = HLGAMB/HLWDTH
       HLBRTA = HLGAMTA/HLWDTH
@@ -1317,8 +1354,8 @@ C Common blocks:
      .     LAMBDA5,M1,M2
       DOUBLE PRECISION MHL,MHH,MH3,MH5,ALPHA,VPHI,VCHI
       COMMON/PHYSPARAMS/MHL,MHH,MH3,MH5,ALPHA,VPHI,VCHI
-      DOUBLE PRECISION KVL, KFL, KGAML, KZGAML, DKGAML, DKZGAML
-      COMMON/KAPPASL/KVL,KFL,KGAML,KZGAML,DKGAML,DKZGAML
+      DOUBLE PRECISION KVL, KFL, KGAML, KZGAML, DKGAML, DKZGAML,KWIDTHL
+      COMMON/KAPPASL/KVL,KFL,KGAML,KZGAML,DKGAML,DKZGAML,KWIDTHL
       DOUBLE PRECISION V, MZ, MW, MTPOLE, MBMB, MCMC, MS, MTAU, MMU,
      .     ALPHAEM,ALSMZ, VCB, VUS, VUB, GAMZ, GAMW
       COMMON/SM/V,MZ,MW,MTPOLE,MBMB,MCMC,MS,MTAU,MMU,
