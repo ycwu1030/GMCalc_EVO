@@ -41,7 +41,8 @@ C Local variables:
       DOUBLE PRECISION SIN2A, COS2A
       INTEGER I
       DOUBLE PRECISION PI
-      DOUBLE PRECISION DMHL,DMHH,MTEMP
+      DOUBLE PRECISION MH1, MH2
+      DOUBLE PRECISION DMH1,DMH2,MTEMP
       PI = 4.D0*DATAN(1.D0)
 
       POSMSQOK = 1
@@ -103,8 +104,19 @@ C Mass-squared matrix elements for two custodial singlet states:
       IF (MHLSQ.LT.0.D0.OR.MHHSQ.LT.0.D0) THEN
          POSMSQOK = 0
       ELSE
-         MHL = DSQRT(MHLSQ)
-         MHH = DSQRT(MHHSQ)
+C In order to always keep MHL as the 125 Higgs. Need to do some exchange
+         MH1 = DSQRT(MHLSQ)
+         MH2 = DSQRT(MHHSQ)
+         DMH1=ABS(MH1-125.D0)
+         DMH2=ABS(MH2-125.D0)
+C YCWU: I always keep MHL is the 125 Higgs
+         IF (DMH1.LT.DMH2) THEN
+            MHL = MH1
+            MHH = MH2
+         ELSE
+            MHL = MH2
+            MHH = MH1
+         ENDIF
       ENDIF
 C Mixing angle for two custodial singlet states:
 C Arcsin will give 2alpha in the range [-pi/2,pi/2]:
@@ -119,17 +131,6 @@ C check the sign of cos(2alpha):
          ELSE
             ALPHA = -PI/2.D0 - ALPHA
          ENDIF
-      ENDIF
-C In order to always keep MHL as the 125 Higgs. Need to do some exchange
-      DMHL=ABS(MHL-125.D0)
-      DMHH=ABS(MHH-125.D0)
-      IF ((POSMSQOK.EQ.1).AND.(DMHL.GT.DMHH)) THEN
-C If PSOMSQOK and MHH is closer to 125, we exchange the role of h and H
-         MTEMP=MHL
-         MHL=MHH
-         MHH=MTEMP
-C The ALPHA is also changed accordingly. (But in this situation, the definition of H has an extra minus sign)
-         ALPHA = ALPHA + PI/2.D0
       ENDIF
 
       RETURN
