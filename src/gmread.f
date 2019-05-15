@@ -433,7 +433,8 @@ C Identify the deepest of the good extrema:
                   GOODVCHI = BB(3)/DSQRT(3.D0)
                   GOODV = VV(3)
                ENDIF
-               IF (DABS(VCHI(J)-GOODVCHI).LT.1D-6) THEN
+               IF ((DABS(VCHI(J)-GOODVCHI).LT.1D-6)
+     .           .AND.(DABS(VPHI(J)-GOODVPHI).LT.1D-6)) THEN
                   INPUTOK = 1
                ELSE
                   SOLOK(J) = 0
@@ -494,7 +495,8 @@ C Identify the deepest of the good extrema:
                GOODVCHI = BB(3)/DSQRT(3.D0)
                GOODV = VV(3)
             ENDIF
-            IF (DABS(VCHI(1)-GOODVCHI).LT.1D-6) THEN
+            IF ((DABS(VCHI(J)-GOODVCHI).LT.1D-6)
+     .           .AND.(DABS(VPHI(J)-GOODVPHI).LT.1D-6)) THEN
                INPUTOK = 1
             ELSE
                INPUTOK = 0
