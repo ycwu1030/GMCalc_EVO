@@ -394,8 +394,11 @@ C Check that v_chi is not too big for each solution.
 C Compute lambda1 and mu2sq for each solution:
                MSQ12 = DSQRT(3.D0)*VPHI(J) * (-M1/2.D0 
      .              + (4.D0*LAMBDA2 - 2.D0*LAMBDA5)*VCHI(J))
-               MSQ22 = M1*VPHI(J)**2/4.D0/VCHI(J) - 6.D0*M2*VCHI(J)
-     .              + (8.D0*LAMBDA3 + 24.D0*LAMBDA4)*VCHI(J)**2
+C                MSQ22 = M1*VPHI(J)**2/4.D0/VCHI(J) - 6.D0*M2*VCHI(J)
+C      .              + (8.D0*LAMBDA3 + 24.D0*LAMBDA4)*VCHI(J)**2
+               MSQ22 = MU3SQ - 12.D0*M2*VCHI(J) 
+     .          + (2.D0*LAMBDA2-LAMBDA5)*VPHI(J)**2
+     .          + 12.D0*(LAMBDA3+3.D0*LAMBDA4)*VCHI(J)**2
                L1TEST(J) = 1.D0/8.D0/VPHI(J)**2 
      .              * (MH**2 + MSQ12**2/(MSQ22 - MH**2))
                MU2SQTEST(J) = 2.D0*(-2.D0*L1TEST(J)*VPHI(J)**2 
@@ -465,8 +468,11 @@ C Now compute lambda1 and mu2^2.
             VPHI(1) = DSQRT(V**2 - 8.D0*VCHI(1)**2)
             MSQ12 = DSQRT(3.D0)*VPHI(1) * (-M1/2.D0 
      .           + (4.D0*LAMBDA2 - 2.D0*LAMBDA5)*VCHI(1))
-            MSQ22 = M1*VPHI(1)**2/4.D0/VCHI(1) - 6.D0*M2*VCHI(1)
-     .           + (8.D0*LAMBDA3 + 24.D0*LAMBDA4)*VCHI(1)**2
+C             MSQ22 = M1*VPHI(1)**2/4.D0/VCHI(1) - 6.D0*M2*VCHI(1)
+C      .           + (8.D0*LAMBDA3 + 24.D0*LAMBDA4)*VCHI(1)**2
+            MSQ22 = MU3SQ - 12.D0*M2*VCHI(1) 
+     .          + (2.D0*LAMBDA2-LAMBDA5)*VPHI(1)**2
+     .          + 12.D0*(LAMBDA3+3.D0*LAMBDA4)*VCHI(1)**2
             LAMBDA1 = 1.D0/8.D0/VPHI(1)**2 
      .              * (MH**2 + MSQ12**2/(MSQ22 - MH**2))
             MU2SQ = 2.D0*(-2.D0*LAMBDA1*VPHI(1)**2 
