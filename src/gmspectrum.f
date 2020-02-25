@@ -120,6 +120,8 @@ C YCWU: I always keep MHL is the 125 Higgs
       ENDIF
 C Mixing angle for two custodial singlet states:
 C Arcsin will give 2alpha in the range [-pi/2,pi/2]:
+      MHLSQ=MHL**2
+      MHHSQ=MHH**2
       SIN2A = -2.D0*MM12/(MHLSQ-MHHSQ)
       ALPHA = 0.5D0*DASIN(SIN2A)
 C To determine whether we ought to be in (-pi,-pi/2] or [pi/2,pi],
