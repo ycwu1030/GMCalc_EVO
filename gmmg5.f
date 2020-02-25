@@ -21,6 +21,8 @@ C Common blocks:
       COMMON/INPUT/MH,INPUTSET
       DOUBLE PRECISION IMHL, IMHH, IMH3, IMH5, ISH, ISA
       COMMON/INPUT3/IMHL,IMHH,IMH3,IMH5,ISH,ISA
+      CHARACTER*100 MGFILENAME
+      COMMON/IONAMES/MGFILENAME
       CALL PRINT_BANNER
 C==================================================================
 C This initialization call must always come before anything else!
@@ -122,17 +124,25 @@ C In order to get the EFT parameters and the decay tables, need to call:
             CALL HLCOUPS
             CALL HHCOUPS
             CALL CALCDECAYS
+            MGFILENAME="param_card_LO.dat"
             CALL WRITE_PARAM_CARD_LO
+            MGFILENAME="param_card_NLO.dat"
             CALL WRITE_PARAM_CARD_NLO
+            MGFILENAME="param_card_EFT_LO.dat"
             CALL WRITE_PARAM_CARD_EFT_LO
+            MGFILENAME="param_card_EFT_NLO.dat"
+            CALL WRITE_PARAM_CARD_EFT_NLO
             PRINT *
             PRINT *, "Three files written: "
             PRINT *, " * param_card-LO.dat, for use with MadGraph5"
             PRINT *, " * param_card-NLO.dat, for use with ",
      .           "MadGraph5_aMC@NLO"
-            PRINT *, " * param_card-EFTLO.dat, ",
+            PRINT *, " * param_card_EFT_LO.dat, ",
      .           "for use with the GM model with EFT couplings ",
      .           "in MadGraph5"
+            PRINT *, " * param_card_EFT_NLO.dat, ",
+     .           "for use with the GM model with EFT couplings ",
+     .           "in MadGraph5_aMC@NLO"
             PRINT *, "Rename the desired file to param_card.dat"
             PRINT *, "and move it to your MadGraph Cards directory."
             PRINT *, "Get the Georgi-Machacek model UFO files at"
