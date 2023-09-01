@@ -1,5 +1,27 @@
 GMCALC -- changes log
 
+2022/08/04 - version 1.5.3:
+	     Fixed bugs in src/gmhbhs.f that affected HiggsBounds results
+	     when h, H, or H30 masses are close to the ttbar threshold.
+
+2022/07/04 - version 1.5.2:
+	     Modified vegas.f to comply with fortran 2018 standards
+	     (NO change to the algorithm).
+	     Tested with LoopTools 2.16.
+
+2022/06/04 - version 1.5.1:
+	     Updated CMS direct search for VBF -> H5++/-- (2104.04762).
+	     Incorporated new ATLAS direct search for Drell-Yan H++H-- 
+	     -> 4W (2101.11961).
+
+2021/02/05 - version 1.5.0:
+             Added interface to call HiggsBounds-5 and HiggsSignals-2.
+	     Added routines to apply direct constraints from VBF -> H5++, 
+             Drell-Yan H5++, and Drell-Yan H50 --> gamma gamma, which 
+	     are not in HiggsBounds 5.3.0.
+             Rewrote calculation of MSQ22 in READIN2 to properly handle 
+             v_chi = 0 case.
+
 2018/09/30 - version 1.4.1 (new inputset):
 	     Added INPUTSET 6 (mh, m5, sin(thetaH), lambda2, lambda3,
 	     lambda4, lambda5, M2).

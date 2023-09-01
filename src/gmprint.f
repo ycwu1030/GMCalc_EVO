@@ -6,7 +6,7 @@ C==================================================================
       IMPLICIT NONE
       PRINT *
       WRITE(*,1)
-      WRITE(*,3) "                GMCALC v1.4.1:                   "
+      WRITE(*,3) "                GMCALC v1.5.3:                   "
       WRITE(*,3) "   A calculator for the Georgi-Machacek model    "
       WRITE(*,3) "http://people.physics.carleton.ca/~logan/gmcalc/ "
       WRITE(*,1)
@@ -294,6 +294,10 @@ C Common blocks:
       COMMON/KAPPASL/KVL,KFL,KGAML,KZGAML,DKGAML,DKZGAML
       DOUBLE PRECISION KVH, KFH, KGAMH, KZGAMH, DKGAMH, DKZGAMH
       COMMON/KAPPASH/KVH,KFH,KGAMH,KZGAMH,DKGAMH,DKZGAMH
+      DOUBLE PRECISION KW3, KZ3, KF3
+      COMMON/KAPPAS3/KW3,KZ3,KF3
+      DOUBLE PRECISION KW5, KZ5, KF5
+      COMMON/KAPPAS5/KW5,KZ5,KF5
       DOUBLE PRECISION V, MZ, MW, MTPOLE, MBMB, MCMC, MS, MTAU, MMU,
      .     ALPHAEM,ALSMZ, VCB, VUS, VUB, GAMZ, GAMW
       COMMON/SM/V,MZ,MW,MTPOLE,MBMB,MCMC,MS,MTAU,MMU,
@@ -326,6 +330,22 @@ C Common blocks:
          PRINT *, "kappa_Zgamma =       ", KZGAMH
          PRINT *, "Delta kappa_Zgamma = ", DKZGAMH
       ENDIF
+
+! modified by Ameen on 2018-08-02
+      PRINT *
+      PRINT *, "Coupling modification factors for H^3_0, mass = ",
+     .     MH3, " GeV:"
+      PRINT *, "kappa_W =            ", KW3
+      PRINT *, "kappa_Z =            ", KZ3
+      PRINT *, "kappa_f =            ", KF3
+
+      PRINT *
+      PRINT *, "Coupling modification factors for H^5_0, mass = ",
+     .     MH5, " GeV:"
+      PRINT *, "kappa_W =            ", KW5
+      PRINT *, "kappa_Z =            ", KZ5
+      PRINT *, "kappa_f =            ", KF5
+! end modified by Ameen
 
       RETURN
       END

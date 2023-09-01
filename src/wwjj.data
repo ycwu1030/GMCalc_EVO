@@ -1,0 +1,15 @@
+# Data file const_8TeV_2sig.dat from 1407.5053 courtesy of Cheng-Wei Chiang
+# Recast of ATLAS Run 1 VBF like-sign W xsec measurement in 1405.6241 
+# m5 (GeV)  vchi limit (GeV) [assuming 100% BR into W+W+: xsec ~ vchi^2]
+
+100 75.837398
+125 53.732304
+150 36.787372
+175 33.280423
+200 33.537879
+300 36.143878
+400 44.452134
+500 52.865601
+600 64.511703
+700 80.283333
+

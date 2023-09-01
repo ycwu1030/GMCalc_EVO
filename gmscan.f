@@ -41,6 +41,13 @@ C Common block for indirect constraints
       INTEGER BSMMOK, SPAROK, BSGAMLOOSEOK, BSGAMTIGHTOK
       COMMON/INDIR/RBSMM, SPARAM, BSMMOK, SPAROK, 
      .     BSGAMLOOSEOK, BSGAMTIGHTOK
+C Common block for direct search constraints (including recasts)
+      INTEGER WWJJOK, LSDMOK, H5PPOK, ATLAS8TEVGAGAOK
+      INTEGER ATLAS13TEVDYGAGAOK, ATLAS13TEVVBFGAGAOK
+      INTEGER DYHPPOK
+      COMMON/CONSTR/WWJJOK, LSDMOK, H5PPOK, ATLAS8TEVGAGAOK,
+     .     ATLAS13TEVDYGAGAOK, ATLAS13TEVVBFGAGAOK,
+     .     DYHPPOK
 C Common blocks for decay BRs and total widths
       DOUBLE PRECISION HLBRB, HLBRTA, HLBRMU, HLBRS, HLBRC, HLBRT,
      .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ, 
@@ -104,7 +111,8 @@ C Local variables:
       DOUBLE PRECISION MU3MAX
       DOUBLE PRECISION MINMASS
       INTEGER SMLIKE
-      DOUBLE PRECISION KV, KF, KGAM, KZGAM, DKGAM, DKZGAM
+      DOUBLE PRECISION KV, KF, KGAM, KZGAM, DKGAM, DKZGAM, MHOTHER
+      DOUBLE PRECISION M11SQ, M12SQ, M22SQ
       DOUBLE PRECISION PI
       PI = 4.D0*DATAN(1.D0)
       CALL PRINT_BANNER
@@ -120,7 +128,7 @@ C and/or QCD corrections.  To keep everything on, set both flags to 1.
       QCDCORRS = 1
 C==================================================================
 C Parameter scan will run until NPOINTS good points are found:
-      NPOINTS = 100
+      NPOINTS = 10000
 C==================================================================
 C Set the light Higgs mass and the maximum value of sqrt(MU3SQ) 
 C to be scanned over.  
@@ -138,13 +146,26 @@ C scan points to the screen.
 C==================================================================
 C Since in our scan we want to fix mh = 125 GeV, we must use an 
 C INPUTSET in which this is taken as an input: i.e., 2, 3, 4, 5, or 6.
-      INPUTSET = 2
+      INPUTSET = 6
 C==================================================================
       
       CALL LTSTARTER
       OPEN (UNIT = 90, FILE = 'scan-output.data')
-      WRITE (90,*) "# kappa_V   kappa_f   kappa_gamma   m_5", 
-     .     "    BR(H5+ -> WZ)    H5+ width"
+      WRITE (90,*) "# m5    sH     lambda2    lambda3    ",
+     .     "lambda4     M1      M2     ",
+     .     "lambda5     m3      mH      kappaV      kappaf      ", 
+     .     "kappagam    lambda1     mu3sq     M11sq    M12sq    M22sq",
+     .     "      sin(alpha)"
+
+C============================================================
+C Printing a comment to the screen here because this is NOT a
+C general scan, rather it is a scan of the low-m5 benchmark as     
+C defined in arXiv:2003.05536.
+      PRINT *, "Performing a scan over the low-m5 benchmark."
+      PRINT *, "For a general scan, adjust the scan ranges"
+      PRINT *, "in gmscan.f."
+      PRINT *, "Indirect and some direct-search constraints "
+      PRINT *, "have been applied within gmscan.f."
 
 C Start the loop over scan points
       TRIALS = 0
@@ -152,32 +173,42 @@ C Start the loop over scan points
  400  CALL RANDOM_NUMBER(X)
       TRIALS = TRIALS + 1
 C============ setting up the scan ranges ==========================
-      X(1) = -200.D0 + X(1)*(200.D0+MU3MAX)
-      MU3SQ = X(1)*DABS(X(1))
-      LAMBDA3 = -0.5D0*PI + X(3)*11.D0/10.D0*PI
-      IF (LAMBDA3.LT.0) THEN
-         LAMBDA4 = -LAMBDA3 + X(4)*(4.D0/11.D0*LAMBDA3 
-     .        + 2.D0/11.D0*PI)
-      ELSE
-         LAMBDA4 = -LAMBDA3/3.D0 + X(4)*(-10.D0/33.D0*LAMBDA3 
-     .        + 2.D0/11.D0*PI)
-      ENDIF
-      LAMBDA2MAX = DSQRT(4.D0*PI**2 
-     .     - 2.D0*PI*(7.D0*LAMBDA3 + 11.D0*LAMBDA4))/3.D0
-      LAMBDA2 = -LAMBDA2MAX + X(2)*2.D0*LAMBDA2MAX
-      LAMBDA5MIN = -2.D0*PI + LAMBDA2
-      LAMBDA5MAX = 2.D0*PI + LAMBDA2
-      LAMBDA5 = LAMBDA5MIN + X(5)*(LAMBDA5MAX-LAMBDA5MIN)
-      M1MAX = 3.5D0*DSQRT(DABS(MU3SQ))
-      IF (M1MAX.LT.3500.D0) THEN
-         M1MAX = 3500.D0
-      ENDIF
-      M1 = X(6)*M1MAX
-      M2MAX = 1.3D0*DSQRT(DABS(MU3SQ))
-      IF (M2MAX.LT.250.D0) THEN
-         M2MAX = 250.D0
-      ENDIF
-      M2 = -M2MAX + X(7)*2.D0*M2MAX
+c      X(1) = -200.D0 + X(1)*(200.D0+MU3MAX)
+c      MU3SQ = X(1)*DABS(X(1))
+      IMHL = MH
+      IMH5 = 50.D0 + X(1)*(550.D0-50.D0)
+      ISH = X(6)
+c      LAMBDA3 = -0.5D0*PI + X(3)*11.D0/10.D0*PI
+c      IF (LAMBDA3.LT.0) THEN
+c         LAMBDA4 = -LAMBDA3 + X(4)*(4.D0/11.D0*LAMBDA3 
+c     .        + 2.D0/11.D0*PI)
+c      ELSE
+c         LAMBDA4 = -LAMBDA3/3.D0 + X(4)*(-10.D0/33.D0*LAMBDA3 
+c     .        + 2.D0/11.D0*PI)
+c      ENDIF
+      LAMBDA3 = -1.5D0
+      LAMBDA4 = 1.5D0
+c      LAMBDA2MAX = DSQRT(4.D0*PI**2 
+c     .     - 2.D0*PI*(7.D0*LAMBDA3 + 11.D0*LAMBDA4))/3.D0
+c      LAMBDA2 = -LAMBDA2MAX + X(2)*2.D0*LAMBDA2MAX
+c      LAMBDA2 = X(2)*LAMBDA2MAX
+      LAMBDA2 = 0.08D0*IMH5/100.D0
+c      LAMBDA5MIN = -2.D0*PI + LAMBDA2
+c      LAMBDA5MAX = 2.D0*PI + LAMBDA2
+c      LAMBDA5 = LAMBDA5MIN + X(5)*(LAMBDA5MAX-LAMBDA5MIN)
+      LAMBDA5 = -4.D0*LAMBDA2
+C      M1MAX = 3.5D0*DSQRT(DABS(MU3SQ))
+C      IF (M1MAX.LT.3500.D0) THEN
+C         M1MAX = 3500.D0
+C      ENDIF
+C      M1 = X(6)*M1MAX
+c      M2MAX = 1.3D0*DSQRT(DABS(MU3SQ))
+c      IF (M2MAX.LT.250.D0) THEN
+c         M2MAX = 250.D0
+c      ENDIF
+c      M2MAX = 1000.D0
+c      M2 = -M2MAX + X(7)*2.D0*M2MAX
+      M2 = 10.D0
 C==================================================================
  500  CALL LOAD_INPUTS
       IF (INPUTOK.EQ.1) THEN
@@ -191,7 +222,8 @@ C==================================================================
             ENDIF
             CALL CALCINDIR
 C Impose the indirect constraints: S parameter and "loose" b -> s gamma
-            IF (SPAROK.EQ.1.AND.BSGAMLOOSEOK.EQ.1) THEN
+c            IF (SPAROK.EQ.1.AND.BSGAMLOOSEOK.EQ.1) THEN
+            IF (SPAROK.EQ.1.AND.BSMMOK.EQ.1) THEN
                POINTS = POINTS + 1
                CALL HLCOUPS
                CALL HHCOUPS
@@ -213,6 +245,7 @@ C +- 0.5 GeV, take the SM-like one to be the one with larger |KV|.
                   KZGAM = KZGAML
                   DKGAM = DKGAML
                   DKZGAM = DKZGAML
+                  MHOTHER = MHH
                ELSE
                   KV = KVH
                   KF = KFH
@@ -220,11 +253,33 @@ C +- 0.5 GeV, take the SM-like one to be the one with larger |KV|.
                   KZGAM = KZGAMH
                   DKGAM = DKGAMH
                   DKZGAM = DKZGAMH
+                  MHOTHER = MHL
                ENDIF
-               CALL CALCDECAYS
+c               CALL CALCDECAYS
 C MINMASS is the mass of the lightest *new* scalar:
-               CALL GET_MINMASS(MINMASS)
-               WRITE (90, *) KV, KF, KGAM, MH5, H5PBRWZ, H5PWDTH
+c               CALL GET_MINMASS(MINMASS)
+               M11SQ = 8.D0*LAMBDA1*VPHI**2
+               M12SQ = DSQRT(3.D0)/2.D0*VPHI
+     .              *(-M1 + 4.D0*(2.D0*LAMBDA2-LAMBDA5)*VCHI)
+               M22SQ = M1*VPHI**2/4.D0/VCHI - 6.D0*M2*VCHI
+     .              + 8.D0*(LAMBDA3+3.D0*LAMBDA4)*VCHI**2
+C Calculate and apply the hard-coded direct-search constraints:
+               CALL CALCWWJJ
+               CALL CALCLSDM
+               CALL CALCH5PP
+               CALL CALCATLAS8TEVGAGA
+               CALL CALCATLAS13TEVDYGAGA
+               CALL CALCATLAS13TEVVBFGAGA
+               CALL CALCDYHPP
+               IF (WWJJOK*LSDMOK*H5PPOK*DYHPPOK.EQ.1) THEN
+                  IF (ATLAS8TEVGAGAOK*ATLAS13TEVDYGAGAOK
+     .                 *ATLAS13TEVVBFGAGAOK.EQ.1) THEN
+               WRITE (90, *) MH5, DSQRT(8.D0)*VCHI/V, LAMBDA2, LAMBDA3,
+     .              LAMBDA4, M1, M2, LAMBDA5, MH3, MHOTHER, KV, KF, 
+     .              KGAM, LAMBDA1, MU3SQ, M11SQ, M12SQ, M22SQ, 
+     .              DSIN(ALPHA)
+                  ENDIF
+               ENDIF
             ENDIF
          ENDIF
       ENDIF

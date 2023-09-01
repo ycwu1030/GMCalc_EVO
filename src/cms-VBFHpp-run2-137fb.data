@@ -1,0 +1,19 @@
+# CMS Run 2 (137 fb-1) search for VBF H++ -> W+W+ -> likesign dileptons
+# 137 fb-1, 13 TeV.  Xsec is proportional to sH^2.
+# arXiv:2104.04762 figure 8c (6c of published version), numbers from HEPData.
+# N.B. expected limit is everywhere stronger than previous CMS publication 1709.05822,
+# though the actual limit is weaker for m5 ~ 200-525 GeV.
+# m5 (GeV)     sH upper bound (assumes 100% BR to W+W+)
+
+200  0.208
+300  0.263
+400  0.275
+500  0.294
+600  0.282
+700  0.261
+800  0.267
+900  0.281
+1000 0.297
+1500 0.369
+2000 0.563
+3000 1.85

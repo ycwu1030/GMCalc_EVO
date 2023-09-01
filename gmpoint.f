@@ -135,6 +135,8 @@ C==================================================================
             CALL CALCINDIR
             CALL HLCOUPS
             CALL HHCOUPS
+            CALL H3COUPS
+            CALL H5COUPS
             CALL CALCDECAYS
             CALL PRINT_RESULTS
             CALL PRINT_HCOUPS

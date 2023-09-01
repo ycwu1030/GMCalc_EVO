@@ -1,0 +1,11 @@
+# ATLAS Run 2 (139 fb-1) search for DY H++H-- -> 4W -> leptons
+# 139 fb-1, 13 TeV.  Done in HTM; GM H5pp H5mm xsec is the same.
+# arXiv:2101.11961 figure 9a, numbers from HEPData.
+# m5 (GeV)        sigma * BR upper bound (fb)        6 rows
+
+200.0	15.025
+300.0	9.6896
+350.0	8.7162
+400.0	7.4858
+500.0	5.5951
+600.0	4.8339

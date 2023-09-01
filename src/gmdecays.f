@@ -1512,6 +1512,67 @@ C Combine the amplitudes:
       RETURN
       END
 
+
+! modified by Ameen on 2018-08-02
+C------------------------------------------------------------------
+      SUBROUTINE H3COUPS
+C Computes kappa_W, kappa_Z, and kappa_f
+C for the triplet Higgs mass eigenstate H^3_0 (of mass MH3).
+C Note that kappa_f as calculated here has the correct sign for
+C down-type quarks. Multiply by -1 for up-type quarks.
+C INPUTS: common blocks LPARAMS, PHYSPARAMS
+C OUTPUTS: common block KAPPAS3
+      IMPLICIT NONE
+C Common blocks:
+      DOUBLE PRECISION MU2SQ,MU3SQ,LAMBDA1,LAMBDA2,LAMBDA3,LAMBDA4,
+     .     LAMBDA5,M1,M2
+      COMMON/LPARAMS/MU2SQ,MU3SQ,LAMBDA1,LAMBDA2,LAMBDA3,LAMBDA4,
+     .     LAMBDA5,M1,M2
+      DOUBLE PRECISION MHL,MHH,MH3,MH5,ALPHA,VPHI,VCHI
+      COMMON/PHYSPARAMS/MHL,MHH,MH3,MH5,ALPHA,VPHI,VCHI
+      DOUBLE PRECISION KW3,KZ3,KF3
+      COMMON/KAPPAS3/KW3,KZ3,KF3
+C Local variables:
+      DOUBLE PRECISION VSM
+
+      VSM = DSQRT(VPHI**2 + 8.D0*VCHI**2)
+      KW3 = 0.D0
+      KZ3 = 0.D0
+      KF3 = 2.D0*DSQRT(2.D0)*VCHI/VPHI 
+
+      RETURN
+      END
+
+
+C------------------------------------------------------------------
+      SUBROUTINE H5COUPS
+C Computes kappa_W, kappa_Z, and kappa_f
+C for the fiveplet Higgs mass eigenstate H^5_0 (of mass MH5).
+C INPUTS: common blocks LPARAMS, PHYSPARAMS
+C OUTPUTS: common block KAPPAS5
+      IMPLICIT NONE
+C Common blocks:
+      DOUBLE PRECISION MU2SQ,MU3SQ,LAMBDA1,LAMBDA2,LAMBDA3,LAMBDA4,
+     .     LAMBDA5,M1,M2
+      COMMON/LPARAMS/MU2SQ,MU3SQ,LAMBDA1,LAMBDA2,LAMBDA3,LAMBDA4,
+     .     LAMBDA5,M1,M2
+      DOUBLE PRECISION MHL,MHH,MH3,MH5,ALPHA,VPHI,VCHI
+      COMMON/PHYSPARAMS/MHL,MHH,MH3,MH5,ALPHA,VPHI,VCHI
+      DOUBLE PRECISION KW5,KZ5,KF5
+      COMMON/KAPPAS5/KW5,KZ5,KF5
+C Local variables:
+      DOUBLE PRECISION VSM
+
+      VSM = DSQRT(VPHI**2 + 8.D0*VCHI**2)
+      KW5 = 2.D0*DSQRT(2.D0)/DSQRT(3.D0)*VCHI/VSM
+      KZ5 = -2.D0*KW5
+      KF5 = 0.D0
+
+      RETURN
+      END
+! end modified by Ameen
+
+
 C Functions for loop integrals used by HLCOUPS and HHCOUPS:
 
       DOUBLE COMPLEX FUNCTION F0(TAU)
