@@ -4,13 +4,13 @@ C     Subroutine to calculate the physical masses & parameters
 C==================================================================
 
       SUBROUTINE CALCPHYS
-C Computes the physical masses, vevs, and the mixing angle between the two 
+C Computes the physical masses, vevs, and the mixing angle between the two
 C custodial singlets, starting from the Lagrangian parameters.
 C INPUTS: common block LPARAMS
 C OUTPUTS: common block PHYSPARAMS
 C          POSMSQOK flag
 C
-C MHL is the lighter custodial singlet mass and  MHH is the heavier 
+C MHL is the lighter custodial singlet mass and  MHH is the heavier
 C custodial singlet mass.
 C The mixing angle alpha is defined according to
 C    h = cos(alpha) H1 - sin(alpha) H1'
@@ -78,10 +78,10 @@ C Identify the deepest of the good extrema:
 
 C Compute the masses and mixing angle alpha.
 C Alpha is in the range (-pi/2, pi/2].
-C For numerical safety when M1 and VCHI are both very small, use 
+C For numerical safety when M1 and VCHI are both very small, use
 C a minimization-condition identity for M1/VCHI:
-      M1OVERVCHI = 4.D0/VPHI**2 * (MU3SQ 
-     .     + (2.D0*LAMBDA2 - LAMBDA5)*VPHI**2 
+      M1OVERVCHI = 4.D0/VPHI**2 * (MU3SQ
+     .     + (2.D0*LAMBDA2 - LAMBDA5)*VPHI**2
      .     + 4.D0*(LAMBDA3 + 3.D0*LAMBDA4)*VCHI**2
      .     - 6.D0*M2*VCHI)
       MH3SQ = (M1OVERVCHI/4.D0 + LAMBDA5/2.D0)*VSM**2
@@ -95,7 +95,7 @@ C a minimization-condition identity for M1/VCHI:
       ENDIF
 C Mass-squared matrix elements for two custodial singlet states:
       MM11 = 8.D0 * LAMBDA1 * VPHI**2
-      MM12 = DSQRT(3.D0)*VPHI 
+      MM12 = DSQRT(3.D0)*VPHI
      .     * (-M1/2.D0 + (4.D0*LAMBDA2 - 2.D0*LAMBDA5)*VCHI)
       MM22 = M1OVERVCHI*VPHI**2/4.D0 - 6.D0*M2*VCHI
      .     + 8.D0*VCHI**2*(LAMBDA3 + 3.D0*LAMBDA4)
@@ -119,21 +119,12 @@ C YCWU: I always keep MHL is the 125 Higgs
          ENDIF
       ENDIF
 C Mixing angle for two custodial singlet states:
-C Arcsin will give 2alpha in the range [-pi/2,pi/2]:
+C YCWU: Using DATAN2 function to simplify the calculation
       MHLSQ=MHL**2
       MHHSQ=MHH**2
       SIN2A = -2.D0*MM12/(MHLSQ-MHHSQ)
-      ALPHA = 0.5D0*DASIN(SIN2A)
-C To determine whether we ought to be in (-pi,-pi/2] or [pi/2,pi],
-C check the sign of cos(2alpha):
       COS2A = (MM11-MM22)/(MHLSQ-MHHSQ)
-      IF (COS2A.LT.0.D0) THEN
-         IF (SIN2A.GE.0.D0) THEN
-            ALPHA = PI/2.D0 - ALPHA
-         ELSE
-            ALPHA = -PI/2.D0 - ALPHA
-         ENDIF
-      ENDIF
+      ALPHA = 0.5D0*DATAN2(SIN2A,COS2A)
 
       RETURN
       END
@@ -145,7 +136,7 @@ C==================================================================
 
       SUBROUTINE THYCHECK
 C Parent subroutine for performing the theory checks:
-C perturbative unitarity of the lambda_i, 
+C perturbative unitarity of the lambda_i,
 C bounded-from-belowness of the scalar potential,
 C and the absence of deeper alternative minima.
       IMPLICIT NONE
@@ -171,11 +162,11 @@ C======================================================================
       SUBROUTINE UNICHECK
 C Checks the partial-wave unitarity conditions on the five lambda
 C parameters of the scalar potential, using |Re(a_0)| \leq 1/2.
-C Up to date as of Jan 3, 2014 (after comparison with Aoki & Kanemura, 
+C Up to date as of Jan 3, 2014 (after comparison with Aoki & Kanemura,
 C arXiv:0712.4053).
 C INPUTS: the 5 lambda parameters
-C OUTPUTS: the flag UNIOK 
-C          = 1 if the unitarity bound is satisfied 
+C OUTPUTS: the flag UNIOK
+C          = 1 if the unitarity bound is satisfied
 C          = 0 if unitarity bound is violated
       IMPLICIT NONE
 C Common blocks:
@@ -185,7 +176,7 @@ C Common blocks:
      .     LAMBDA5,M1,M2
       INTEGER UNIOK, BFBOK, POSMSQOK, MINOK, INPUTOK
       COMMON/FLAGS/UNIOK, BFBOK, POSMSQOK, MINOK, INPUTOK
-C Local variables: 
+C Local variables:
       DOUBLE PRECISION X1P, X1M, X2P, X2M, Y1, Y2, Y3, Y4, Y5
       DOUBLE PRECISION PI
       DOUBLE PRECISION A, B, C, D
@@ -194,9 +185,9 @@ C Local variables:
 
       UNIOK = 1
 
-C We use the same notation for the unitarity conditions as 
+C We use the same notation for the unitarity conditions as
 C Aoki & Kanemura, 0712.4053.
-C The zeroth-partial-wave unitarity condition is given by 
+C The zeroth-partial-wave unitarity condition is given by
 C |Re a_0| > 1/2, or each of |x_i|, |y_i| < 8 pi.
 
       A = 12.D0*LAMBDA1 + 14.D0*LAMBDA3 + 22.D0*LAMBDA4
@@ -213,7 +204,7 @@ c      Y3 = 4.D0*LAMBDA2 - LAMBDA5
 c      Y4 = 4.D0*LAMBDA2 + 2.D0*LAMBDA5
       Y5 = 4.D0*LAMBDA2 - 4.D0*LAMBDA5
 
-C Note that the constraints on y_2, y_3, and y_4 do not provide any 
+C Note that the constraints on y_2, y_3, and y_4 do not provide any
 C additional information.  Therefore we do not compute them, for speed.
 
       IF (DABS(X1P).GT.8.D0*PI) THEN
@@ -278,7 +269,7 @@ C              lambda_4 > -lambda_3 (for lambda_3 < 0)
          ENDIF
       ENDIF
 
-C Condition 3: 
+C Condition 3:
 C for lambda_5 >= 0 and lambda_3 >= 0:
 C     lambda_2 > (1/2)lambda_5 - 2 sqrt(lambda_1(lambda_3/3 + lambda4))
 C for lambda_5 >= 0 and lambda_3 < 0: have to scan over zeta
@@ -287,7 +278,7 @@ C for lambda_5 < 0: have to scan over zeta
 C     lambda_2 > omega- lambda_5 - 2 sqrt(lambda_1(zeta*lambda_3 + lambda_4))
       IF (LAMBDA5.GE.0.D0) THEN
          IF (LAMBDA3.GE.0.D0) THEN
-            RHS = LAMBDA5/2.D0 
+            RHS = LAMBDA5/2.D0
      .           - 2.D0*DSQRT(LAMBDA1*(LAMBDA3/3.D0 + LAMBDA4))
             IF (LAMBDA2.LT.RHS) THEN
                BFBOK = 0
@@ -296,7 +287,7 @@ C     lambda_2 > omega- lambda_5 - 2 sqrt(lambda_1(zeta*lambda_3 + lambda_4))
 C Case 2: lambda_5 >= 0 but lambda_3 < 0.  Scan over zeta in (1/3, 1).
             DO 10 I=0,1000
                ZETA = 1.D0/3.D0 + I*2.D0/3.D0/1000.D0
-               RHS = OMEGAP(ZETA)*LAMBDA5 
+               RHS = OMEGAP(ZETA)*LAMBDA5
      .              - 2.D0*DSQRT(LAMBDA1*(ZETA*LAMBDA3 + LAMBDA4))
                IF (LAMBDA2.LT.RHS) THEN
                   BFBOK = 0
@@ -321,14 +312,14 @@ C Case 3: lambda_5 < 0.  Scan over zeta in (1/3, 1).
       END
 
 C Functions omega+ and omega- of zeta used in the bounded-from-below
-C conditions on lambda_2: 
+C conditions on lambda_2:
 C These two functions are called by the subroutine BFBCHECK.
       DOUBLE PRECISION FUNCTION OMEGAP(ZETA)
       IMPLICIT NONE
       DOUBLE PRECISION ZETA
       DOUBLE PRECISION B
       B = DSQRT(3.D0/2.D0*(ZETA - 1.D0/3.D0))
-      OMEGAP = (1.D0-B)/6.D0 + DSQRT(2.D0)/3.D0 
+      OMEGAP = (1.D0-B)/6.D0 + DSQRT(2.D0)/3.D0
      .     * DSQRT((1.D0-B)*(0.5D0+B))
       END
 
@@ -337,7 +328,7 @@ C These two functions are called by the subroutine BFBCHECK.
       DOUBLE PRECISION ZETA
       DOUBLE PRECISION B
       B = DSQRT(3.D0/2.D0*(ZETA - 1.D0/3.D0))
-      OMEGAM = (1.D0-B)/6.D0 - DSQRT(2.D0)/3.D0 
+      OMEGAM = (1.D0-B)/6.D0 - DSQRT(2.D0)/3.D0
      .     * DSQRT((1.D0-B)*(0.5D0+B))
       END
 
@@ -400,7 +391,7 @@ c            PRINT *, "Bad vacuum found!", AA(J), BB(J), VV(J)
          ENDIF
  10   CONTINUE
 
-C If lambda3, lambda5, M1, and M2 are all positive, then the desired 
+C If lambda3, lambda5, M1, and M2 are all positive, then the desired
 C vacuum at theta = a = acos(1/sqrt(3)) is the global minimum.
 C If lambda3 and lambda5 are positive and M1 and M2 are negative, then
 C the other desired vacuum at theta = pi + a is the global minimum.
@@ -459,17 +450,17 @@ C These four functions are used by the subroutine MINCHECK.
       DOUBLE PRECISION FUNCTION FOMEGA(THETA)
       IMPLICIT NONE
       DOUBLE PRECISION THETA
-      FOMEGA = 0.25D0*DSIN(THETA)**2 
+      FOMEGA = 0.25D0*DSIN(THETA)**2
      .     + 1.D0/DSQRT(2.D0)*DSIN(THETA)*DCOS(THETA)
       END
 
       DOUBLE PRECISION FUNCTION FSIGMA(THETA)
       IMPLICIT NONE
       DOUBLE PRECISION THETA
-      FSIGMA = 1.D0/2.D0/DSQRT(2.D0)*DSIN(THETA) 
+      FSIGMA = 1.D0/2.D0/DSQRT(2.D0)*DSIN(THETA)
      .     + 0.25D0*DCOS(THETA)
       END
-      
+
       DOUBLE PRECISION FUNCTION FRHO(THETA)
       IMPLICIT NONE
       DOUBLE PRECISION THETA
@@ -482,7 +473,7 @@ C Computes the field values and potential at each of the 6 possible
 C minima, for given fixed values of zeta, omega, sigma, & rho.
 C The field values are defined as:
 C     a^2 = Tr(Phi^dagger Phi) = v_phi^2
-C     b^2 = Tr(X^dagger X) = 2 v_chi^2 + v_xi^2 
+C     b^2 = Tr(X^dagger X) = 2 v_chi^2 + v_xi^2
 C                          = 3 v_chi^2 in the desired vacuum.
 C INPUTS: the 5 lambda parameters, mu2sq, mu3sq, M1, and M2;
 C         and the values of zeta, omega, sigma, and rho.
@@ -511,14 +502,14 @@ C Local variables:
       U2 = -0.5D0 + II*DSQRT(3.D0)/2.D0
       U3 = -0.5D0 - II*DSQRT(3.D0)/2.D0
 
-C Solve for the values of a and b at the extrema: 
+C Solve for the values of a and b at the extrema:
 
 C 1) a != 0 case; cubic equation for b.
       ALPHA = 4.D0*(ZETA*LAMBDA3 + LAMBDA4)
      .     - 1.D0/LAMBDA1 * (LAMBDA2 - OMEGA*LAMBDA5)**2
-      BETA = -3.D0*M2*RHO + 3.D0/2.D0/LAMBDA1 * M1*SIGMA 
+      BETA = -3.D0*M2*RHO + 3.D0/2.D0/LAMBDA1 * M1*SIGMA
      .     * (LAMBDA2 - OMEGA*LAMBDA5)
-      GAMMA = MU3SQ - 1.D0/2.D0/LAMBDA1 * MU2SQ 
+      GAMMA = MU3SQ - 1.D0/2.D0/LAMBDA1 * MU2SQ
      .     * (LAMBDA2 - OMEGA*LAMBDA5)
      .     - 1.D0/2.D0/LAMBDA1 * M1**2 * SIGMA**2
       DELTA = 1.D0/4.D0/LAMBDA1 * MU2SQ * M1 * SIGMA
@@ -526,7 +517,7 @@ C 1) a != 0 case; cubic equation for b.
      .     + BETA**2 * GAMMA**2 - 4.D0 * ALPHA * GAMMA**3
      .     - 27.D0 * ALPHA**2 * DELTA**2
       DISC0 = BETA**2 - 3.D0 * ALPHA * GAMMA
-      DISC1 = 2.D0 * BETA**3 - 9.D0 * ALPHA*BETA*GAMMA 
+      DISC1 = 2.D0 * BETA**3 - 9.D0 * ALPHA*BETA*GAMMA
      .     + 27.D0 * ALPHA**2 * DELTA
       CROOT = (0.5D0 * DISC1 + 0.5D0*CDSQRT(-27.D0*ALPHA**2*DISC)
      .     )**(1.D0/3.D0)
@@ -538,7 +529,7 @@ C Thanks to R. Ruiz for pointing out this bug. Fixed 2015/01/20.
       BC1 = -1.D0/3.D0/ALPHA * (BETA + U1*CROOT + DISC0/U1/CROOT)
       BC2 = -1.D0/3.D0/ALPHA * (BETA + U2*CROOT + DISC0/U2/CROOT)
       BC3 = -1.D0/3.D0/ALPHA * (BETA + U3*CROOT + DISC0/U3/CROOT)
-      
+
       RDISC = DREAL(DISC)
       IF (RDISC.GE.0.D0) THEN
 C The 3 roots are all real (if RDISC = 0 then two are the same)
@@ -636,4 +627,3 @@ C Common blocks:
      .     - LAMBDA5 * OMEGA * A**2 * B**2
      .     - M1 * SIGMA * A**2 * B - M2 * RHO * B**3
       END
-
