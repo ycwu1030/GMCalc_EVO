@@ -1,12 +1,12 @@
 C=======================================================================
-C GMCALC: a calculator for the Georgi-Machacek model 
+C GMCALC: a calculator for the Georgi-Machacek model
 C (with the most general custodial-symmetry-invariant scalar potential)
 C http://people.physics.carleton.ca/~logan/gmcalc/
 C========================================================================
 
       PROGRAM GMPOINT
 C Program to compute the spectrum, check theoretical and indirect
-C constraints, compute the h and H coupling modification factors, 
+C constraints, compute the h and H coupling modification factors,
 C and compute the decay BRs and total width of all the scalars.
       IMPLICIT NONE
 C Common blocks:
@@ -25,8 +25,9 @@ C Common blocks:
       DOUBLE PRECISION MH
       INTEGER INPUTSET
       COMMON/INPUT/MH,INPUTSET
+      INTEGER IZ2
       DOUBLE PRECISION IMHL, IMHH, IMH3, IMH5, ISH, ISA
-      COMMON/INPUT3/IMHL,IMHH,IMH3,IMH5,ISH,ISA
+      COMMON/INPUT3/IMHL,IMHH,IMH3,IMH5,ISH,ISA,IZ2
       INTEGER OFFSHELL, QCDCORRS
       COMMON/DECAYFLAGS/OFFSHELL, QCDCORRS
       CALL PRINT_BANNER
@@ -47,7 +48,7 @@ C INPUTSET = 3: mh, mH, m3, m5, sin(thetaH), sin(alpha), M1, M2
 C INPUTSET = 4: mh, m5, sin(thetaH), lambda2, lambda3, lambda4, M1, M2
 C INPUTSET = 5: mh, mH, sin(thetaH), sin(alpha), lambda2, lambda3, lambda4, lambda5
 C INPUTSET = 6: mh, m5, sin(thetaH), lambda2, lambda3, lambda4, lambda5, M2
-      INPUTSET = 4
+      INPUTSET = 6
 C==================================================================
 C SILENT = 0: echo the inputs to the screen
 C SILENT = 1: don't echo the inputs to the screen
@@ -58,7 +59,7 @@ C and/or QCD corrections.  To keep everything on, set both flags to 1.
       OFFSHELL = 1
       QCDCORRS = 1
 C==================================================================
-C Modify these entries to set the input parameters (used if INPUTMODE = 0). 
+C Modify these entries to set the input parameters (used if INPUTMODE = 0).
       IF (INPUTMODE.EQ.0) THEN
          IF (INPUTSET.EQ.1) THEN
             MU3SQ = 90000.D0
@@ -111,12 +112,14 @@ C benchmark.
          ELSE IF (INPUTSET.EQ.6) THEN
             IMHL = 125.D0
             IMH5 = 339.748616D0
-            ISH = 0.194487374D0
+            ISH = 0.D0
+c            ISH = 0.194487374D0
             LAMBDA2 = 0.1D0
             LAMBDA3 = 0.1D0
             LAMBDA4 = 0.1D0
             LAMBDA5 = 0.1D0
-            M2 = 100.D0
+            M2 = 0.D0
+            IZ2 = 1
          ELSE
             PRINT *, "INPUTSET = ", INPUTSET, "is not a valid option."
             PRINT *
@@ -152,6 +155,3 @@ C==================================================================
 
  10   STOP
       END
-
-
-

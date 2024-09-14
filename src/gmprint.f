@@ -29,26 +29,26 @@ C Common blocks:
       COMMON/PHYSPARAMS/MHL,MHH,MH3,MH5,ALPHA,VPHI,VCHI
 C Common blocks for decay BRs and total widths
       DOUBLE PRECISION HLBRB, HLBRTA, HLBRMU, HLBRS, HLBRC, HLBRT,
-     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ, 
+     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ,
      .     HLBRWH3P, HLBRZH3N,
      .     HLBRH3N, HLBRH3P, HLBRH5N, HLBRH5P, HLBRH5PP, HLWDTH
       COMMON/HLBRS/HLBRB, HLBRTA, HLBRMU, HLBRS, HLBRC, HLBRT,
-     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ, 
+     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ,
      .     HLBRWH3P, HLBRZH3N,
      .     HLBRH3N, HLBRH3P, HLBRH5N, HLBRH5P, HLBRH5PP, HLWDTH
       DOUBLE PRECISION HHBRB, HHBRTA, HHBRMU, HHBRS, HHBRC, HHBRT,
-     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ, 
+     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ,
      .     HHBRWH3P, HHBRZH3N,
-     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP, 
+     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP,
      .     HHWDTH
       COMMON/HHBRS/HHBRB, HHBRTA, HHBRMU, HHBRS, HHBRC, HHBRT,
-     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ, 
+     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ,
      .     HHBRWH3P, HHBRZH3N,
-     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP, 
+     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP,
      .     HHWDTH
       DOUBLE PRECISION H3NBRB, H3NBRTA, H3NBRMU, H3NBRS, H3NBRC, H3NBRT,
      .     H3NBRZHL, H3NBRZHH, H3NBRZH5N, H3NBRWH5P,
-     .     H3NBRG, H3NBRGA, H3NBRZGA, 
+     .     H3NBRG, H3NBRGA, H3NBRZGA,
      .     H3NWDTH
       COMMON/H3NBRS/H3NBRB, H3NBRTA, H3NBRMU, H3NBRS, H3NBRC, H3NBRT,
      .     H3NBRZHL, H3NBRZHH, H3NBRZH5N, H3NBRWH5P,
@@ -65,16 +65,16 @@ C Common blocks for decay BRs and total widths
      .     H3PBRWGA,
      .     H3PWDTH
       DOUBLE PRECISION H5NBRGA, H5NBRZGA, H5NBRW, H5NBRZ,
-     .     H5NBRZH3N, H5NBRWH3P, 
+     .     H5NBRZH3N, H5NBRWH3P,
      .     H5NBRH3N, H5NBRH3P,
      .     H5NWDTH
       COMMON/H5NBRS/H5NBRGA, H5NBRZGA, H5NBRW, H5NBRZ,
-     .     H5NBRZH3N, H5NBRWH3P, 
+     .     H5NBRZH3N, H5NBRWH3P,
      .     H5NBRH3N, H5NBRH3P,
      .     H5NWDTH
-      DOUBLE PRECISION H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN, 
+      DOUBLE PRECISION H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN,
      .     H5PBRWGA, H5PWDTH
-      COMMON/H5PBRS/H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN, 
+      COMMON/H5PBRS/H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN,
      .     H5PBRWGA, H5PWDTH
       DOUBLE PRECISION H5PPBRWW, H5PPBRWH3, H5PPBRH3P, H5PPWDTH
       COMMON/H5PPBRS/H5PPBRWW, H5PPBRWH3, H5PPBRH3P, H5PPWDTH
@@ -221,7 +221,7 @@ C Common blocks:
 C Common block for indirect constraints
       DOUBLE PRECISION RBSMM, SPARAM
       INTEGER BSMMOK, SPAROK, BSGAMLOOSEOK, BSGAMTIGHTOK
-      COMMON/INDIR/RBSMM, SPARAM, BSMMOK, SPAROK, 
+      COMMON/INDIR/RBSMM, SPARAM, BSMMOK, SPAROK,
      .     BSGAMLOOSEOK, BSGAMTIGHTOK
 
       PRINT *
@@ -272,7 +272,7 @@ C Common block for indirect constraints
       PRINT *, "cot(thetaH) = ", VPHI/2.D0/DSQRT(2.D0)/VCHI
 
       ELSE
-C The input parameters were not ok!        
+C The input parameters were not ok!
          PRINT *, "!!!! Inputs do not give an acceptable potential !!!!"
       ENDIF
 
@@ -282,7 +282,7 @@ C The input parameters were not ok!
       END
 
 C==================================================================
-C     Subroutine to write out the kappa factors 
+C     Subroutine to write out the kappa factors
 C==================================================================
 
       SUBROUTINE PRINT_HCOUPS
@@ -304,7 +304,7 @@ C Common blocks:
      .     ALPHAEM,ALSMZ,VCB,VUS,VUB,GAMZ,GAMW
 
       PRINT *
-      PRINT *, "Coupling modification factors for h, mass = ", 
+      PRINT *, "Coupling modification factors for h, mass = ",
      .     MHL, " GeV:"
       PRINT *, "kappa_V =            ", KVL
       PRINT *, "kappa_f =            ", KFL
@@ -318,7 +318,7 @@ C Common blocks:
       ENDIF
 
       PRINT *
-      PRINT *, "Coupling modification factors for H, mass = ", 
+      PRINT *, "Coupling modification factors for H, mass = ",
      .     MHH, " GeV:"
       PRINT *, "kappa_V =            ", KVH
       PRINT *, "kappa_f =            ", KFH
@@ -379,26 +379,26 @@ C Common blocks:
       DOUBLE PRECISION GF, CABIBBO, MDPOLE, MUPOLE, MELEC
       COMMON/MG5SM/GF,CABIBBO,MDPOLE,MUPOLE,MELEC
       DOUBLE PRECISION HLBRB, HLBRTA, HLBRMU, HLBRS, HLBRC, HLBRT,
-     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ, 
+     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ,
      .     HLBRWH3P, HLBRZH3N,
      .     HLBRH3N, HLBRH3P, HLBRH5N, HLBRH5P, HLBRH5PP, HLWDTH
       COMMON/HLBRS/HLBRB, HLBRTA, HLBRMU, HLBRS, HLBRC, HLBRT,
-     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ, 
+     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ,
      .     HLBRWH3P, HLBRZH3N,
      .     HLBRH3N, HLBRH3P, HLBRH5N, HLBRH5P, HLBRH5PP, HLWDTH
       DOUBLE PRECISION HHBRB, HHBRTA, HHBRMU, HHBRS, HHBRC, HHBRT,
-     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ, 
+     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ,
      .     HHBRWH3P, HHBRZH3N,
-     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP, 
+     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP,
      .     HHWDTH
       COMMON/HHBRS/HHBRB, HHBRTA, HHBRMU, HHBRS, HHBRC, HHBRT,
-     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ, 
+     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ,
      .     HHBRWH3P, HHBRZH3N,
-     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP, 
+     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP,
      .     HHWDTH
       DOUBLE PRECISION H3NBRB, H3NBRTA, H3NBRMU, H3NBRS, H3NBRC, H3NBRT,
      .     H3NBRZHL, H3NBRZHH, H3NBRZH5N, H3NBRWH5P,
-     .     H3NBRG, H3NBRGA, H3NBRZGA, 
+     .     H3NBRG, H3NBRGA, H3NBRZGA,
      .     H3NWDTH
       COMMON/H3NBRS/H3NBRB, H3NBRTA, H3NBRMU, H3NBRS, H3NBRC, H3NBRT,
      .     H3NBRZHL, H3NBRZHH, H3NBRZH5N, H3NBRWH5P,
@@ -415,16 +415,16 @@ C Common blocks:
      .     H3PBRWGA,
      .     H3PWDTH
       DOUBLE PRECISION H5NBRGA, H5NBRZGA, H5NBRW, H5NBRZ,
-     .     H5NBRZH3N, H5NBRWH3P, 
+     .     H5NBRZH3N, H5NBRWH3P,
      .     H5NBRH3N, H5NBRH3P,
      .     H5NWDTH
       COMMON/H5NBRS/H5NBRGA, H5NBRZGA, H5NBRW, H5NBRZ,
-     .     H5NBRZH3N, H5NBRWH3P, 
+     .     H5NBRZH3N, H5NBRWH3P,
      .     H5NBRH3N, H5NBRH3P,
      .     H5NWDTH
-      DOUBLE PRECISION H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN, 
+      DOUBLE PRECISION H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN,
      .     H5PBRWGA, H5PWDTH
-      COMMON/H5PBRS/H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN, 
+      COMMON/H5PBRS/H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN,
      .     H5PBRWGA, H5PWDTH
       DOUBLE PRECISION H5PPBRWW, H5PPBRWH3, H5PPBRH3P, H5PPWDTH
       COMMON/H5PPBRS/H5PPBRWW, H5PPBRWH3, H5PPBRH3P, H5PPWDTH
@@ -462,7 +462,7 @@ C Functions to be called:
       WRITE(90,7) 1, CABIBBO, "cabi          "
       WRITE(90,*)
 
-c--ADD By Y. Wu @ 26 Feb 2018 
+c--ADD By Y. Wu @ 26 Feb 2018
 
       WRITE(90,4)
       WRITE(90,5) "INFORMATION FOR NEUTRALFORMFACTORS   "
@@ -778,7 +778,7 @@ C       WRITE(90,16) 257, 'WH5z '
  77   FORMAT(I5,1X,e12.6,1X,'#',1X,A20)
  8    FORMAT('#',59('='))
  9    FORMAT('#',1X,A50)
- 10   FORMAT('Block QNUMBERS ',I3,2X,'#',1X,A5) 
+ 10   FORMAT('Block QNUMBERS ',I3,2X,'#',1X,A5)
  11   FORMAT(8X,'1',1X,I1,2X,'# 3 times electric charge')
  12   FORMAT(8X,'2',1X,I1,2X,'# number of spin states (2S+1)')
  13   FORMAT(8X,'3',1X,I1,2X,'# colour rep (1: singlet, 3: triplet,',
@@ -791,7 +791,7 @@ C       WRITE(90,16) 257, 'WH5z '
  152  FORMAT(1X,e12.6,1X,I3,1X,I6,1X,I6,1x,' # ',A10)
  153  FORMAT('#')
  16   FORMAT('DECAY ',I3,1X,'Auto ',' # ',A5)
-      
+
       CLOSE (UNIT = 90)
 
       RETURN
@@ -826,26 +826,26 @@ C Common blocks:
       DOUBLE PRECISION GF, CABIBBO, MDPOLE, MUPOLE, MELEC
       COMMON/MG5SM/GF,CABIBBO,MDPOLE,MUPOLE,MELEC
       DOUBLE PRECISION HLBRB, HLBRTA, HLBRMU, HLBRS, HLBRC, HLBRT,
-     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ, 
+     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ,
      .     HLBRWH3P, HLBRZH3N,
      .     HLBRH3N, HLBRH3P, HLBRH5N, HLBRH5P, HLBRH5PP, HLWDTH
       COMMON/HLBRS/HLBRB, HLBRTA, HLBRMU, HLBRS, HLBRC, HLBRT,
-     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ, 
+     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ,
      .     HLBRWH3P, HLBRZH3N,
      .     HLBRH3N, HLBRH3P, HLBRH5N, HLBRH5P, HLBRH5PP, HLWDTH
       DOUBLE PRECISION HHBRB, HHBRTA, HHBRMU, HHBRS, HHBRC, HHBRT,
-     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ, 
+     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ,
      .     HHBRWH3P, HHBRZH3N,
-     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP, 
+     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP,
      .     HHWDTH
       COMMON/HHBRS/HHBRB, HHBRTA, HHBRMU, HHBRS, HHBRC, HHBRT,
-     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ, 
+     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ,
      .     HHBRWH3P, HHBRZH3N,
-     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP, 
+     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP,
      .     HHWDTH
       DOUBLE PRECISION H3NBRB, H3NBRTA, H3NBRMU, H3NBRS, H3NBRC, H3NBRT,
      .     H3NBRZHL, H3NBRZHH, H3NBRZH5N, H3NBRWH5P,
-     .     H3NBRG, H3NBRGA, H3NBRZGA, 
+     .     H3NBRG, H3NBRGA, H3NBRZGA,
      .     H3NWDTH
       COMMON/H3NBRS/H3NBRB, H3NBRTA, H3NBRMU, H3NBRS, H3NBRC, H3NBRT,
      .     H3NBRZHL, H3NBRZHH, H3NBRZH5N, H3NBRWH5P,
@@ -862,16 +862,16 @@ C Common blocks:
      .     H3PBRWGA,
      .     H3PWDTH
       DOUBLE PRECISION H5NBRGA, H5NBRZGA, H5NBRW, H5NBRZ,
-     .     H5NBRZH3N, H5NBRWH3P, 
+     .     H5NBRZH3N, H5NBRWH3P,
      .     H5NBRH3N, H5NBRH3P,
      .     H5NWDTH
       COMMON/H5NBRS/H5NBRGA, H5NBRZGA, H5NBRW, H5NBRZ,
-     .     H5NBRZH3N, H5NBRWH3P, 
+     .     H5NBRZH3N, H5NBRWH3P,
      .     H5NBRH3N, H5NBRH3P,
      .     H5NWDTH
-      DOUBLE PRECISION H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN, 
+      DOUBLE PRECISION H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN,
      .     H5PBRWGA, H5PWDTH
-      COMMON/H5PBRS/H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN, 
+      COMMON/H5PBRS/H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN,
      .     H5PBRWGA, H5PWDTH
       DOUBLE PRECISION H5PPBRWW, H5PPBRWH3, H5PPBRH3P, H5PPWDTH
       COMMON/H5PPBRS/H5PPBRWW, H5PPBRWH3, H5PPBRH3P, H5PPWDTH
@@ -916,7 +916,7 @@ C Functions to be called:
       WRITE(90,7) 1, MW, "MU_R          "
       WRITE(90,*)
 
-c--ADD By Y. Wu @ 26 Feb 2018 
+c--ADD By Y. Wu @ 26 Feb 2018
 
       WRITE(90,4)
       WRITE(90,5) "INFORMATION FOR NEUTRALFORMFACTORS   "
@@ -925,7 +925,7 @@ c--ADD By Y. Wu @ 26 Feb 2018
       WRITE(90,77) 1, RxH5NGAGA, "H5NGAGA             "
       WRITE(90,77) 2, RxH5NZGA, "H5NZGA              "
       WRITE(90,77) 3, RxH3NGAGA, "H3NGAGA             "
-      WRITE(90,77) 4, RxH3NZGA, "H3NZGA            "
+      WRITE(90,77) 4, RxH3NZGA, "H3NZGA              "
       WRITE(90,77) 5, RxH3NGG, "H3NGG               "
       WRITE(90,77) 6, RxHHGAGA, "HHGAGA              "
       WRITE(90,77) 7, RxHHZGA, "HHZGA               "
@@ -1232,7 +1232,7 @@ C       WRITE(90,16) 257, 'WH5z '
  77   FORMAT(I5,1X,e12.6,1X,'#',1X,A20)
  8    FORMAT('#',59('='))
  9    FORMAT('#',1X,A50)
- 10   FORMAT('Block QNUMBERS ',I3,2X,'#',1X,A5) 
+ 10   FORMAT('Block QNUMBERS ',I3,2X,'#',1X,A5)
  11   FORMAT(8X,'1',1X,I1,2X,'# 3 times electric charge')
  12   FORMAT(8X,'2',1X,I1,2X,'# number of spin states (2S+1)')
  13   FORMAT(8X,'3',1X,I1,2X,'# colour rep (1: singlet, 3: triplet,',
@@ -1245,7 +1245,7 @@ C       WRITE(90,16) 257, 'WH5z '
  152  FORMAT(1X,e12.6,1X,I3,1X,I6,1X,I6,1x,' # ',A10)
  153  FORMAT('#')
  16   FORMAT('DECAY ',I3,1X,'Auto ',' # ',A5)
-      
+
       CLOSE (UNIT = 90)
 
       RETURN
@@ -1454,7 +1454,7 @@ C Functions to be called:
  7    FORMAT(I5,1X,e12.6,1X,'#',1X,A14)
  8    FORMAT('#',59('='))
  9    FORMAT('#',1X,A50)
- 10   FORMAT('Block QNUMBERS ',I3,2X,'#',1X,A5) 
+ 10   FORMAT('Block QNUMBERS ',I3,2X,'#',1X,A5)
  11   FORMAT(8X,'1',1X,I1,2X,'# 3 times electric charge')
  12   FORMAT(8X,'2',1X,I1,2X,'# number of spin states (2S+1)')
  13   FORMAT(8X,'3',1X,I1,2X,'# colour rep (1: singlet, 3: triplet,',
@@ -1463,7 +1463,7 @@ C Functions to be called:
      .     ' (0=own anti)')
  15   FORMAT('DECAY ',I3,1X,e12.6,' # ',A5)
  16   FORMAT('DECAY ',I3,1X,'Auto ',' # ',A5)
-      
+
       CLOSE (UNIT = 90)
 
       RETURN
@@ -1672,7 +1672,7 @@ C Functions to be called:
  7    FORMAT(I5,1X,e12.6,1X,'#',1X,A14)
  8    FORMAT('#',59('='))
  9    FORMAT('#',1X,A50)
- 10   FORMAT('Block QNUMBERS ',I3,2X,'#',1X,A5) 
+ 10   FORMAT('Block QNUMBERS ',I3,2X,'#',1X,A5)
  11   FORMAT(8X,'1',1X,I1,2X,'# 3 times electric charge')
  12   FORMAT(8X,'2',1X,I1,2X,'# number of spin states (2S+1)')
  13   FORMAT(8X,'3',1X,I1,2X,'# colour rep (1: singlet, 3: triplet,',
@@ -1681,10 +1681,8 @@ C Functions to be called:
      .     ' (0=own anti)')
  15   FORMAT('DECAY ',I3,1X,e12.6,' # ',A5)
  16   FORMAT('DECAY ',I3,1X,'Auto ',' # ',A5)
-      
+
       CLOSE (UNIT = 90)
 
       RETURN
       END
-
-

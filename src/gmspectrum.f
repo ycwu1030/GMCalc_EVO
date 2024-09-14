@@ -29,6 +29,9 @@ C Common blocks:
       COMMON/FLAGS/UNIOK, BFBOK, POSMSQOK, MINOK, INPUTOK
       DOUBLE PRECISION ZETA, OMEGA, SIGMA, RHO
       COMMON/HYPER/ZETA,OMEGA,SIGMA,RHO
+      DOUBLE PRECISION MH
+      INTEGER INPUTSET,Z2
+      COMMON/INPUT/MH,INPUTSET,Z2
       DOUBLE PRECISION AA, BB, VV
       DIMENSION AA(6), BB(6), VV(6)
       COMMON/MINIMA/AA,BB,VV
@@ -74,7 +77,12 @@ C Identify the deepest of the good extrema:
          VCHI = BB(3)/DSQRT(3.D0)
          GOODV = VV(3)
       ENDIF
+      IF ( Z2 .EQ. 1) THEN
+        VCHI = 0.D0
+      ENDIF
       VSM = DSQRT(VPHI**2 + 8.D0*VCHI**2)
+
+
 
 C Compute the masses and mixing angle alpha.
 C Alpha is in the range (-pi/2, pi/2].
@@ -85,8 +93,13 @@ C a minimization-condition identity for M1/VCHI:
      .     + 4.D0*(LAMBDA3 + 3.D0*LAMBDA4)*VCHI**2
      .     - 6.D0*M2*VCHI)
       MH3SQ = (M1OVERVCHI/4.D0 + LAMBDA5/2.D0)*VSM**2
-      MH5SQ = M1OVERVCHI/4.D0*VPHI**2 + 12.D0*M2*VCHI
-     .     + 3.D0/2.D0*LAMBDA5*VPHI**2 + 8.D0*LAMBDA3*VCHI**2
+C      MH5SQ = M1OVERVCHI/4.D0*VPHI**2 + 12.D0*M2*VCHI
+C     .     + 3.D0/2.D0*LAMBDA5*VPHI**2 + 8.D0*LAMBDA3*VCHI**2
+      MH3SQ = (MU3SQ + 0.5D0*(4.D0*LAMBDA2-LAMBDA5)*VPHI**2
+     .     + 4.D0*(LAMBDA3 + 3.D0*LAMBDA4)*VCHI**2
+     .     - 6.D0*M2*VCHI)*VSM**2/VPHI**2
+      MH5SQ = MU3SQ + (4.D0*LAMBDA2+LAMBDA5)*VPHI**2/2.D0
+     .     + 12.D0*(LAMBDA3 + LAMBDA4)*VCHI**2 + 6.D0*M2*VCHI
       IF (MH3SQ.LT.0.D0.OR.MH5SQ.LT.0.D0) THEN
          POSMSQOK = 0
       ELSE
@@ -97,8 +110,13 @@ C Mass-squared matrix elements for two custodial singlet states:
       MM11 = 8.D0 * LAMBDA1 * VPHI**2
       MM12 = DSQRT(3.D0)*VPHI
      .     * (-M1/2.D0 + (4.D0*LAMBDA2 - 2.D0*LAMBDA5)*VCHI)
-      MM22 = M1OVERVCHI*VPHI**2/4.D0 - 6.D0*M2*VCHI
-     .     + 8.D0*VCHI**2*(LAMBDA3 + 3.D0*LAMBDA4)
+      IF ( Z2 .EQ. 1) THEN
+        MM12 = 0.D0
+      ENDIF
+C      MM22 = M1OVERVCHI*VPHI**2/4.D0 - 6.D0*M2*VCHI
+C     .     + 8.D0*VCHI**2*(LAMBDA3 + 3.D0*LAMBDA4)
+      MM22 = MU3SQ + (2.D0*LAMBDA2 - LAMBDA5)*VPHI**2
+     .     + 12.D0*(LAMBDA3+3.D0*LAMBDA4)*VCHI**2 - 12.D0*M2*VCHI
       MHLSQ = 0.5D0*(MM11 + MM22 - DSQRT((MM11-MM22)**2 + 4.D0*MM12**2))
       MHHSQ = 0.5D0*(MM11 + MM22 + DSQRT((MM11-MM22)**2 + 4.D0*MM12**2))
       IF (MHLSQ.LT.0.D0.OR.MHHSQ.LT.0.D0) THEN
@@ -125,6 +143,9 @@ C YCWU: Using DATAN2 function to simplify the calculation
       SIN2A = -2.D0*MM12/(MHLSQ-MHHSQ)
       COS2A = (MM11-MM22)/(MHLSQ-MHHSQ)
       ALPHA = 0.5D0*DATAN2(SIN2A,COS2A)
+      IF ( Z2 .EQ. 1) THEN
+        ALPHA = 0.D0
+      ENDIF
 
       RETURN
       END

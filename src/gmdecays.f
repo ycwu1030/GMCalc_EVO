@@ -41,11 +41,11 @@ C Common blocks:
      .     RxHLGAGA,RxHLZGA,RxHLGG,
      .     IxH5PWGA,IxH3PWGA,IxH3PWGATILDE
       DOUBLE PRECISION HLBRB, HLBRTA, HLBRMU, HLBRS, HLBRC, HLBRT,
-     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ, 
+     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ,
      .     HLBRWH3P, HLBRZH3N,
      .     HLBRH3N, HLBRH3P, HLBRH5N, HLBRH5P, HLBRH5PP, HLWDTH
       COMMON/HLBRS/HLBRB, HLBRTA, HLBRMU, HLBRS, HLBRC, HLBRT,
-     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ, 
+     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ,
      .     HLBRWH3P, HLBRZH3N,
      .     HLBRH3N, HLBRH3P, HLBRH5N, HLBRH5P, HLBRH5PP, HLWDTH
       INTEGER OFFSHELL, QCDCORRS
@@ -55,9 +55,9 @@ C Common blocks:
       DOUBLE PRECISION RAT, IAT, RAW, IAW, RA3, IA3, RA5, IA5
       COMMON/AMPGAGA/RAT,IAT,RAW,IAW,RA3,IA3,RA5,IA5
 C Local variables:
-      DOUBLE PRECISION HLGAMB, HLGAMTA, HLGAMMU, HLGAMS, HLGAMC, 
-     .     HLGAMT, 
-     .     HLGAMG, HLGAMGA, HLGAMZGA, HLGAMW, HLGAMZ, 
+      DOUBLE PRECISION HLGAMB, HLGAMTA, HLGAMMU, HLGAMS, HLGAMC,
+     .     HLGAMT,
+     .     HLGAMG, HLGAMGA, HLGAMZGA, HLGAMW, HLGAMZ,
      .     HLGAMWH3P, HLGAMZH3N,
      .     HLGAMH3N, HLGAMH3P, HLGAMH5N, HLGAMH5P, HLGAMH5PP
       DOUBLE PRECISION KF, KV, CHHZ, CHHW, GHL33, GHL55, CZ11, CZ22
@@ -67,8 +67,8 @@ C Local variables:
       DOUBLE PRECISION SW, CW, PI
       DOUBLE PRECISION MTRUN, MBRUN, MCRUN, MT, MB, MC
 C YCWU: Variables used to record SM values: (Based on that MHL is the 125 Higgs)
-      DOUBLE PRECISION HSMGAMB, HSMGAMTA, HSMGAMMU, HSMGAMS, HSMGAMC, 
-     .     HSMGAMT, 
+      DOUBLE PRECISION HSMGAMB, HSMGAMTA, HSMGAMMU, HSMGAMS, HSMGAMC,
+     .     HSMGAMT,
      .     HSMGAMG, HSMGAMGA, HSMGAMZGA, HSMGAMW, HSMGAMZ
       DOUBLE PRECISION HSMGAMTOTAL
 C Functions to be called:
@@ -146,7 +146,7 @@ C HLGAMWH3P is the sum of HL -> W+ H3- and HL -> W- H3+
       CHHW = -2.D0*MW/V * (DSQRT(2.D0)*VCHI/V*DCOS(ALPHA)
      .     + DSQRT(2.D0/3.D0)*VPHI/V*DSIN(ALPHA))
       HLGAMWH3P = 2.D0 * GAMWH(MHL,MH3,MW,CHHW,V)
-      CHHZ = -2.D0*MZ/V * (DSQRT(2.D0)*VCHI/V*DCOS(ALPHA) 
+      CHHZ = -2.D0*MZ/V * (DSQRT(2.D0)*VCHI/V*DCOS(ALPHA)
      .     + DSQRT(2.D0/3.D0)*VPHI/V*DSIN(ALPHA))
       HLGAMZH3N = GAMZH(MHL,MH3,MZ,CHHZ,V,SW)
 
@@ -177,7 +177,7 @@ C HL decays to massless gauge bosons (loop-induced)
       LAMBDAT = 4.D0*MT**2/MZ**2
       LAMBDAW = 4.D0*MW**2/MZ**2
 
-C Loop-induced h -> gg: include QCD corrections, Nf = 5 light flavors, 
+C Loop-induced h -> gg: include QCD corrections, Nf = 5 light flavors,
 C renorm scale = MHL.
 C SM amplitude for the top loop:
       AT = -F12(TAUT)
@@ -240,12 +240,12 @@ C SM amplitude for the top loop:
      .        * (I1(TAUT,LAMBDAT) - I2(TAUT,LAMBDAT))
 C SM amplitude for the W loop:
          AW = -CW/SW * (4.D0*(3.D0-SW**2/CW**2) * I2(TAUW,LAMBDAW)
-     .        + ((1.D0+2.D0/TAUW)*SW**2/CW**2 - (5.D0+2.D0/TAUW)) 
+     .        + ((1.D0+2.D0/TAUW)*SW**2/CW**2 - (5.D0+2.D0/TAUW))
      .        * I1(TAUW,LAMBDAW))
 C Amplitudes for the scalar loops:
          CZ11 = 1.D0/2.D0/SW/CW * (1.D0 - 2.D0*SW**2)
          CZ22 = 1.D0/SW/CW * (1.D0 - 2.D0*SW**2)
-         A3P = 2.D0*GHL33*CZ11/MH3**2 
+         A3P = 2.D0*GHL33*CZ11/MH3**2
      .        * I1(4.D0*MH3**2/MHL**2,4.D0*MH3**2/MZ**2)
          A5P = 2.D0*GHL55*CZ11/MH5**2
      .        * I1(4.D0*MH5**2/MHL**2,4.D0*MH5**2/MZ**2)
@@ -268,8 +268,8 @@ C Compute the total width
      .     + HLGAMG + HLGAMGA + HLGAMZGA + HLGAMW + HLGAMZ
      .     + HLGAMWH3P + HLGAMZH3N
      .     + HLGAMH3N + HLGAMH3P + HLGAMH5N + HLGAMH5P + HLGAMH5PP
-      HSMGAMTOTAL = HSMGAMB + HSMGAMTA + HSMGAMMU + HSMGAMS + HSMGAMC + 
-     .     HSMGAMT + 
+      HSMGAMTOTAL = HSMGAMB + HSMGAMTA + HSMGAMMU + HSMGAMS + HSMGAMC +
+     .     HSMGAMT +
      .     HSMGAMG + HSMGAMGA + HSMGAMZGA + HSMGAMW + HSMGAMZ
 
       KWIDTHL = HLWDTH/HSMGAMTOTAL
@@ -321,30 +321,30 @@ C Common blocks:
       COMMON/SM/V,MZ,MW,MTPOLE,MBMB,MCMC,MS,MTAU,MMU,
      .     ALPHAEM,ALSMZ,VCB,VUS,VUB,GAMZ,GAMW
       DOUBLE PRECISION HHBRB, HHBRTA, HHBRMU, HHBRS, HHBRC, HHBRT,
-     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ, 
+     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ,
      .     HHBRWH3P, HHBRZH3N,
-     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP, 
+     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP,
      .     HHWDTH
       COMMON/HHBRS/HHBRB, HHBRTA, HHBRMU, HHBRS, HHBRC, HHBRT,
-     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ, 
+     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ,
      .     HHBRWH3P, HHBRZH3N,
-     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP, 
+     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP,
      .     HHWDTH
       INTEGER OFFSHELL, QCDCORRS
       COMMON/DECAYFLAGS/OFFSHELL, QCDCORRS
 C Local variables:
-      DOUBLE PRECISION HHGAMB, HHGAMTA, HHGAMMU, HHGAMS, HHGAMC, 
-     .     HHGAMT, 
-     .     HHGAMG, HHGAMGA, HHGAMZGA, HHGAMW, HHGAMZ, 
+      DOUBLE PRECISION HHGAMB, HHGAMTA, HHGAMMU, HHGAMS, HHGAMC,
+     .     HHGAMT,
+     .     HHGAMG, HHGAMGA, HHGAMZGA, HHGAMW, HHGAMZ,
      .     HHGAMWH3P, HHGAMZH3N,
      .     HHGAMHL, HHGAMH3N, HHGAMH3P, HHGAMH5N, HHGAMH5P, HHGAMH5PP
-      DOUBLE PRECISION KF, KV, CHHZ, CHHW, GHLL, GHH33, GHH55, 
+      DOUBLE PRECISION KF, KV, CHHZ, CHHW, GHLL, GHH33, GHH55,
      .     CZ11, CZ22
       DOUBLE PRECISION TAUT, TAUW, LAMBDAT, LAMBDAW
       DOUBLE COMPLEX AT, AW, AS, A3P, A5P, A5PP, AMP
       DOUBLE PRECISION EE5
       DOUBLE PRECISION SW, CW, PI
-      DOUBLE PRECISION MTRUN, MBRUN, MCRUN, MT, MB, MC
+      DOUBLE PRECISION MTRUN, MBRUN, MCRUN, MT, MB, MC, WIDTHTMP
 C Functions to be called:
       DOUBLE PRECISION GAMFF, GAMVVOF, GAMVV, GAMWH, GAMZH, GAMHH
       DOUBLE COMPLEX F0, F12, F1, I1, I2
@@ -406,7 +406,7 @@ C HHGAMWH3P is the sum of HH -> W+ H3- and HH -> W- H3+
       CHHW = -2.D0*MW/V * (DSQRT(2.D0)*VCHI/V*DSIN(ALPHA)
      .     - DSQRT(2.D0/3.D0)*VPHI/V*DCOS(ALPHA))
       HHGAMWH3P = 2.D0 * GAMWH(MHH,MH3,MW,CHHW,V)
-      CHHZ = -2.D0*MZ/V * (DSQRT(2.D0)*VCHI/V*DSIN(ALPHA) 
+      CHHZ = -2.D0*MZ/V * (DSQRT(2.D0)*VCHI/V*DSIN(ALPHA)
      .     - DSQRT(2.D0/3.D0)*VPHI/V*DCOS(ALPHA))
       HHGAMZH3N = GAMZH(MHH,MH3,MZ,CHHZ,V,SW)
 
@@ -422,7 +422,7 @@ C HH decays to two scalars: on-shell only.
      .     *(3.D0*DCOS(ALPHA)**2 - 2.D0)
      .     - 4.D0*DSQRT(3.D0)*M2*DCOS(ALPHA)*DSIN(ALPHA)**2
       GHH33 = 64.D0*LAMBDA1*DSIN(ALPHA)*VCHI**2*VPHI/V**2
-     .     + 8.D0/DSQRT(3.D0)*VPHI**2*VCHI/V**2 
+     .     + 8.D0/DSQRT(3.D0)*VPHI**2*VCHI/V**2
      .     *DCOS(ALPHA)*(LAMBDA3 + 3.D0*LAMBDA4)
      .     + 4.D0/DSQRT(3.D0)*VCHI*M1/V**2
      .     *(DCOS(ALPHA)*VCHI + DSQRT(3.D0)*DSIN(ALPHA)*VPHI)
@@ -493,12 +493,12 @@ C SM amplitude for the top loop:
      .        * (I1(TAUT,LAMBDAT) - I2(TAUT,LAMBDAT))
 C SM amplitude for the W loop:
          AW = -CW/SW * (4.D0*(3.D0-SW**2/CW**2) * I2(TAUW,LAMBDAW)
-     .        + ((1.D0+2.D0/TAUW)*SW**2/CW**2 - (5.D0+2.D0/TAUW)) 
+     .        + ((1.D0+2.D0/TAUW)*SW**2/CW**2 - (5.D0+2.D0/TAUW))
      .        * I1(TAUW,LAMBDAW))
 C Amplitudes for the scalar loops:
          CZ11 = 1.D0/2.D0/SW/CW * (1.D0 - 2.D0*SW**2)
          CZ22 = 1.D0/SW/CW * (1.D0 - 2.D0*SW**2)
-         A3P = 2.D0*GHH33*CZ11/MH3**2 
+         A3P = 2.D0*GHH33*CZ11/MH3**2
      .        * I1(4.D0*MH3**2/MHH**2,4.D0*MH3**2/MZ**2)
          A5P = 2.D0*GHH55*CZ11/MH5**2
      .        * I1(4.D0*MH5**2/MHH**2,4.D0*MH5**2/MZ**2)
@@ -517,29 +517,32 @@ C Compute the total width
       HHWDTH = HHGAMB + HHGAMTA + HHGAMMU + HHGAMS + HHGAMC + HHGAMT
      .     + HHGAMG + HHGAMGA + HHGAMZGA + HHGAMW + HHGAMZ
      .     + HHGAMWH3P + HHGAMZH3N
-     .     + HHGAMHL + HHGAMH3N + HHGAMH3P + HHGAMH5N + HHGAMH5P 
+     .     + HHGAMHL + HHGAMH3N + HHGAMH3P + HHGAMH5N + HHGAMH5P
      .     + HHGAMH5PP
-
+      WIDTHTMP = 0.D0
+      IF ( HHWDTH .EQ. 0.D0) THEN
+        WIDTHTMP = 1.D-5
+      ENDIF
 C Compute the BRs
-      HHBRB = HHGAMB/HHWDTH
-      HHBRTA = HHGAMTA/HHWDTH
-      HHBRMU = HHGAMMU/HHWDTH
-      HHBRS = HHGAMS/HHWDTH
-      HHBRC = HHGAMC/HHWDTH
-      HHBRT = HHGAMT/HHWDTH
-      HHBRG = HHGAMG/HHWDTH
-      HHBRGA = HHGAMGA/HHWDTH
-      HHBRZGA = HHGAMZGA/HHWDTH
-      HHBRW = HHGAMW/HHWDTH
-      HHBRZ = HHGAMZ/HHWDTH
-      HHBRWH3P = HHGAMWH3P/HHWDTH
-      HHBRZH3N = HHGAMZH3N/HHWDTH
-      HHBRHL = HHGAMHL/HHWDTH
-      HHBRH3N = HHGAMH3N/HHWDTH
-      HHBRH3P = HHGAMH3P/HHWDTH
-      HHBRH5N = HHGAMH5N/HHWDTH
-      HHBRH5P = HHGAMH5P/HHWDTH
-      HHBRH5PP = HHGAMH5PP/HHWDTH
+      HHBRB = HHGAMB/(HHWDTH+WIDTHTMP)
+      HHBRTA = HHGAMTA/(HHWDTH+WIDTHTMP)
+      HHBRMU = HHGAMMU/(HHWDTH+WIDTHTMP)
+      HHBRS = HHGAMS/(HHWDTH+WIDTHTMP)
+      HHBRC = HHGAMC/(HHWDTH+WIDTHTMP)
+      HHBRT = HHGAMT/(HHWDTH+WIDTHTMP)
+      HHBRG = HHGAMG/(HHWDTH+WIDTHTMP)
+      HHBRGA = HHGAMGA/(HHWDTH+WIDTHTMP)
+      HHBRZGA = HHGAMZGA/(HHWDTH+WIDTHTMP)
+      HHBRW = HHGAMW/(HHWDTH+WIDTHTMP)
+      HHBRZ = HHGAMZ/(HHWDTH+WIDTHTMP)
+      HHBRWH3P = HHGAMWH3P/(HHWDTH+WIDTHTMP)
+      HHBRZH3N = HHGAMZH3N/(HHWDTH+WIDTHTMP)
+      HHBRHL = HHGAMHL/(HHWDTH+WIDTHTMP)
+      HHBRH3N = HHGAMH3N/(HHWDTH+WIDTHTMP)
+      HHBRH3P = HHGAMH3P/(HHWDTH+WIDTHTMP)
+      HHBRH5N = HHGAMH5N/(HHWDTH+WIDTHTMP)
+      HHBRH5P = HHGAMH5P/(HHWDTH+WIDTHTMP)
+      HHBRH5PP = HHGAMH5PP/(HHWDTH+WIDTHTMP)
 
       RETURN
       END
@@ -570,7 +573,7 @@ C Common blocks:
      .     ALPHAEM,ALSMZ,VCB,VUS,VUB,GAMZ,GAMW
       DOUBLE PRECISION H3NBRB, H3NBRTA, H3NBRMU, H3NBRS, H3NBRC, H3NBRT,
      .     H3NBRZHL, H3NBRZHH, H3NBRZH5N, H3NBRWH5P,
-     .     H3NBRG, H3NBRGA, H3NBRZGA, 
+     .     H3NBRG, H3NBRGA, H3NBRZGA,
      .     H3NWDTH
       COMMON/H3NBRS/H3NBRB, H3NBRTA, H3NBRMU, H3NBRS, H3NBRC, H3NBRT,
      .     H3NBRZHL, H3NBRZHH, H3NBRZH5N, H3NBRWH5P,
@@ -616,7 +619,7 @@ C Quark pole masses, for kinematics
       ENDIF
 
 C H3N decays to fermions: computing at tree level for now, on-shell for now.
-C Dropping an overall i on the pseudoscalar couplings, because they are 
+C Dropping an overall i on the pseudoscalar couplings, because they are
 C mod-squared anyway in GAMFF.
       TANH = DSQRT(8.D0)*VCHI/VPHI
       H3NGAMB = GAMFF(3.D0,MH3,MB,MB,0.D0,MBRUN/V*TANH)
@@ -626,7 +629,7 @@ C mod-squared anyway in GAMFF.
       H3NGAMC = GAMFF(3.D0,MH3,MC,MC,0.D0,-MCRUN/V*TANH)
       H3NGAMT = GAMFF(3.D0,MH3,MT,MT,0.D0,-MTRUN/V*TANH)
 
-C H3N decays to vector + scalar (W+H- and W-H+ are summed): 
+C H3N decays to vector + scalar (W+H- and W-H+ are summed):
 C On-shell above threshold, V off-shell below threshold.
 C CHHV's are pure imaginary: we remove the i since it's mod-squared.
 C H3NGAMWH5P is the sum of H3^0 -> W+ H5- and H3^0 -> W- H5+.
@@ -800,9 +803,9 @@ C Treating V_cs = 1, V_tb = 1.
       H3PGAMBU = VUB**2 * GAMFF(3.D0,MH3,MB,0.D0,
      .     MBRUN/DSQRT(2.D0)/V*TANH,MBRUN/DSQRT(2.D0)/V*TANH)
 
-C H3P decays to vector + scalar: 
+C H3P decays to vector + scalar:
 C On-shell above threshold, V off-shell below threshold.
-      CW3L = 2.D0*MW/V**2 * (DSQRT(2.D0)*DCOS(ALPHA)*VCHI 
+      CW3L = 2.D0*MW/V**2 * (DSQRT(2.D0)*DCOS(ALPHA)*VCHI
      .     + DSQRT(2.D0/3.D0)*DSIN(ALPHA)*VPHI)
       H3PGAMWHL = GAMWH(MH3,MHL,MW,CW3L,V)
       CW3H = 2.D0*MW/V**2 * (DSQRT(2.D0)*DSIN(ALPHA)*VCHI
@@ -821,7 +824,7 @@ C H3P decay to W+ gamma (loop induced)
 C Compute the total width
       H3PWDTH = H3PGAMBC + H3PGAMTA + H3PGAMMU + H3PGAMSU
      .     + H3PGAMCS + H3PGAMTB + H3PGAMBU
-     .     + H3PGAMWHL + H3PGAMWHH + H3PGAMZH5P 
+     .     + H3PGAMWHL + H3PGAMWHH + H3PGAMZH5P
      .     + H3PGAMWH5N + H3PGAMWH5PP
      .     + H3PGAMWGA
 
@@ -868,11 +871,11 @@ C Common blocks:
       COMMON/SM/V,MZ,MW,MTPOLE,MBMB,MCMC,MS,MTAU,MMU,
      .     ALPHAEM,ALSMZ,VCB,VUS,VUB,GAMZ,GAMW
       DOUBLE PRECISION H5NBRGA, H5NBRZGA, H5NBRW, H5NBRZ,
-     .     H5NBRZH3N, H5NBRWH3P, 
+     .     H5NBRZH3N, H5NBRWH3P,
      .     H5NBRH3N, H5NBRH3P,
      .     H5NWDTH
       COMMON/H5NBRS/H5NBRGA, H5NBRZGA, H5NBRW, H5NBRZ,
-     .     H5NBRZH3N, H5NBRWH3P, 
+     .     H5NBRZH3N, H5NBRWH3P,
      .     H5NBRH3N, H5NBRH3P,
      .     H5NWDTH
       INTEGER OFFSHELL, QCDCORRS
@@ -886,7 +889,7 @@ C Local variables:
       DOUBLE COMPLEX AW, AS, A3P, A5P, A5PP, AMP
       DOUBLE PRECISION SW, CW, PI
       DOUBLE PRECISION CZ53, CW53, G533N, G533P
-      DOUBLE PRECISION G555P, G555PP, CZ11, CZ22
+      DOUBLE PRECISION G555P, G555PP, CZ11, CZ22, WIDTHTMP
 C Functions to be called:
       DOUBLE PRECISION GAMVVOF, GAMVV, GAMWH, GAMZH, GAMHH
       DOUBLE COMPLEX F0, F1, I1, I2
@@ -917,12 +920,12 @@ C H5NGAMWH3P is the sum of H5^0 -> W+ H3- and H5^0 -> W- H3+.
       H5NGAMWH3P = 2.D0 * GAMWH(MH5,MH3,MW,CW53,V)
 
 C H5N decays to two scalars: on-shell only.
-      G533N = -2.D0*DSQRT(2.D0/3.D0)/V**2 
-     .     * (-8.D0*LAMBDA5*VCHI**3 + 4.D0*M1*VCHI**2 
+      G533N = -2.D0*DSQRT(2.D0/3.D0)/V**2
+     .     * (-8.D0*LAMBDA5*VCHI**3 + 4.D0*M1*VCHI**2
      .     + (-4.D0*LAMBDA5 + 2.D0*LAMBDA3)*VPHI**2*VCHI
      .     + 3.D0*M2*VPHI**2)
-      G533P = DSQRT(2.D0/3.D0)/V**2 
-     .     * (-8.D0*LAMBDA5*VCHI**3 + 4.D0*M1*VCHI**2 
+      G533P = DSQRT(2.D0/3.D0)/V**2
+     .     * (-8.D0*LAMBDA5*VCHI**3 + 4.D0*M1*VCHI**2
      .     + (-4.D0*LAMBDA5 + 2.D0*LAMBDA3)*VPHI**2*VCHI
      .     + 3.D0*M2*VPHI**2)
       H5NGAMH3N = GAMHH(0.5D0,MH5,MH3,MH3,G533N)
@@ -951,18 +954,22 @@ C Loop-induced H5^0 -> Z gamma:
       H5NGAMZGA = HETLOOPH5ZGA()
 
 C Compute the total width
-      H5NWDTH = H5NGAMGA + H5NGAMZGA + H5NGAMW + H5NGAMZ 
+      H5NWDTH = H5NGAMGA + H5NGAMZGA + H5NGAMW + H5NGAMZ
      .     + H5NGAMZH3N + H5NGAMWH3P
      .     + H5NGAMH3N + H5NGAMH3P
+      WIDTHTMP = 0.D0
+      IF ( H5NWDTH .EQ. 0.D0) THEN
+        WIDTHTMP = 1.D-5
+      ENDIF
 C Compute the BRs
-      H5NBRGA = H5NGAMGA/H5NWDTH
-      H5NBRZGA = H5NGAMZGA/H5NWDTH
-      H5NBRW = H5NGAMW/H5NWDTH
-      H5NBRZ = H5NGAMZ/H5NWDTH
-      H5NBRZH3N = H5NGAMZH3N/H5NWDTH
-      H5NBRWH3P = H5NGAMWH3P/H5NWDTH
-      H5NBRH3N = H5NGAMH3N/H5NWDTH
-      H5NBRH3P = H5NGAMH3P/H5NWDTH
+      H5NBRGA = H5NGAMGA/(H5NWDTH+WIDTHTMP)
+      H5NBRZGA = H5NGAMZGA/(H5NWDTH+WIDTHTMP)
+      H5NBRW = H5NGAMW/(H5NWDTH+WIDTHTMP)
+      H5NBRZ = H5NGAMZ/(H5NWDTH+WIDTHTMP)
+      H5NBRZH3N = H5NGAMZH3N/(H5NWDTH+WIDTHTMP)
+      H5NBRWH3P = H5NGAMWH3P/(H5NWDTH+WIDTHTMP)
+      H5NBRH3N = H5NGAMH3N/(H5NWDTH+WIDTHTMP)
+      H5NBRH3P = H5NGAMH3P/(H5NWDTH+WIDTHTMP)
 
       RETURN
       END
@@ -991,9 +998,9 @@ C Common blocks:
      .     ALPHAEM,ALSMZ, VCB, VUS, VUB, GAMZ, GAMW
       COMMON/SM/V,MZ,MW,MTPOLE,MBMB,MCMC,MS,MTAU,MMU,
      .     ALPHAEM,ALSMZ,VCB,VUS,VUB,GAMZ,GAMW
-      DOUBLE PRECISION H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN, 
+      DOUBLE PRECISION H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN,
      .     H5PBRWGA, H5PWDTH
-      COMMON/H5PBRS/H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN, 
+      COMMON/H5PBRS/H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN,
      .     H5PBRWGA, H5PWDTH
       INTEGER OFFSHELL, QCDCORRS
       COMMON/DECAYFLAGS/OFFSHELL, QCDCORRS
@@ -1002,7 +1009,7 @@ C Local variables:
      .     H5PGAMWGA
       DOUBLE PRECISION KV, SV
       DOUBLE PRECISION CW, SW
-      DOUBLE PRECISION CZ35, CW35, G5P3P3N
+      DOUBLE PRECISION CZ35, CW35, G5P3P3N,WIDTHTMP
 C Functions to be called:
       DOUBLE PRECISION GAMVVOF, GAMVV, GAMWH, GAMZH, GAMHH
       DOUBLE PRECISION HETLOOPH5WGA
@@ -1028,7 +1035,7 @@ C CW35 is pure imaginary; remove the i (since it gets mod-squared).
 
 C H5P decays to two scalars: on-shell only.
 C G5P3P3N is pure imaginary; remove the i (since it gets mod-squared).
-      G5P3P3N = -DSQRT(2.D0)/V**2 
+      G5P3P3N = -DSQRT(2.D0)/V**2
      .     * (-8.D0*LAMBDA5*VCHI**3 + 4.D0*M1*VCHI**2
      .     + (-4.D0*LAMBDA5 + 2.D0*LAMBDA3)*VPHI**2*VCHI
      .     + 3.D0*M2*VPHI**2)
@@ -1040,13 +1047,17 @@ C H5P decay to W gamma:
 C Compute the total width
       H5PWDTH = H5PGAMWZ + H5PGAMZH3P + H5PGAMWH3N + H5PGAMH3PN
      .     + H5PGAMWGA
+      WIDTHTMP = 0.D0
+      IF ( H5PWDTH .EQ. 0.D0 ) THEN
+        WIDTHTMP = 1.D-5
+      ENDIF
 
 C Compute the BRs
-      H5PBRWZ = H5PGAMWZ/H5PWDTH
-      H5PBRZH3P = H5PGAMZH3P/H5PWDTH
-      H5PBRWH3N = H5PGAMWH3N/H5PWDTH
-      H5PBRH3PN = H5PGAMH3PN/H5PWDTH
-      H5PBRWGA = H5PGAMWGA/H5PWDTH
+      H5PBRWZ = H5PGAMWZ/(H5PWDTH+WIDTHTMP)
+      H5PBRZH3P = H5PGAMZH3P/(H5PWDTH+WIDTHTMP)
+      H5PBRWH3N = H5PGAMWH3N/(H5PWDTH+WIDTHTMP)
+      H5PBRH3PN = H5PGAMH3PN/(H5PWDTH+WIDTHTMP)
+      H5PBRWGA = H5PGAMWGA/(H5PWDTH+WIDTHTMP)
 
       RETURN
       END
@@ -1074,7 +1085,7 @@ C Common blocks:
 C Local variables:
       DOUBLE PRECISION H5PPGAMWW, H5PPGAMWH3, H5PPGAMH3P
       DOUBLE PRECISION KW
-      DOUBLE PRECISION CW53, G5PP3P3P
+      DOUBLE PRECISION CW53, G5PP3P3P, WIDTHTMP
 C Functions to be called:
       DOUBLE PRECISION GAMVVOF, GAMVV, GAMWH, GAMHH
 
@@ -1087,25 +1098,29 @@ C Symmetry factor SV = 1/2 for identical W+W+
          H5PPGAMWW = GAMVV(0.5D0,MH5,MW,MW,2.D0*MW**2/V*KW)
       ENDIF
 
-C H5PP decays to vector + scalar: 
+C H5PP decays to vector + scalar:
 C On-shell above threshold, V off-shell below threshold.
       CW53 = DSQRT(2.D0)*MW*VPHI/V**2
       H5PPGAMWH3 = GAMWH(MH5,MH3,MW,CW53,V)
 
 C H5PP decays to two scalars: on-shell only.
-      G5PP3P3P = -2.D0/V**2 
-     .     * (-8.D0*LAMBDA5*VCHI**3 + 4.D0*M1*VCHI**2 
+      G5PP3P3P = -2.D0/V**2
+     .     * (-8.D0*LAMBDA5*VCHI**3 + 4.D0*M1*VCHI**2
      .     + (-4.D0*LAMBDA5 + 2.D0*LAMBDA3)*VPHI**2*VCHI
      .     + 3.D0*M2*VPHI**2)
       H5PPGAMH3P = GAMHH(0.5D0,MH5,MH3,MH3,G5PP3P3P)
 
 C Compute the total width
       H5PPWDTH = H5PPGAMWW + H5PPGAMWH3 + H5PPGAMH3P
+      WIDTHTMP = 0.D0
+      IF (H5PPWDTH .EQ. 0.D0) THEN
+        WIDTHTMP = 1.D-5
+      ENDIF
 
 C Compute the BRs
-      H5PPBRWW = H5PPGAMWW/H5PPWDTH
-      H5PPBRWH3 = H5PPGAMWH3/H5PPWDTH
-      H5PPBRH3P = H5PPGAMH3P/H5PPWDTH
+      H5PPBRWW = H5PPGAMWW/(H5PPWDTH+WIDTHTMP)
+      H5PPBRWH3 = H5PPGAMWH3/(H5PPWDTH+WIDTHTMP)
+      H5PPBRH3P = H5PPGAMH3P/(H5PPWDTH+WIDTHTMP)
 
       RETURN
       END
@@ -1133,7 +1148,7 @@ C Local variables:
       PI = 4.D0*DATAN(1.D0)
       TANH = 2.D0*DSQRT(2.D0)*VCHI/VPHI
 
-C Should probably use the running top mass here too... need to improve 
+C Should probably use the running top mass here too... need to improve
 C QCD corrections.
       MB = RUNMB(MH3)
       MT = MTPOLE
@@ -1164,7 +1179,7 @@ C Functions used by the decay table subroutines
 C Function for Gamma(H -> f1 f2)
 C X1 = mf1/mH, X2 = mf2/mH
 C NC = number of colors of fermions f1 and f2
-C CS = scalar and CP = pseudoscalar parts of H coupling, 
+C CS = scalar and CP = pseudoscalar parts of H coupling,
 C Feynman rule = -i (CS + CP gamma5)
       IMPLICIT NONE
       DOUBLE PRECISION NC, MH, MF1, MF2, CS, CP
@@ -1176,7 +1191,7 @@ C Feynman rule = -i (CS + CP gamma5)
          GAMFF = 0.D0
       ELSE
          GAMFF = NC*MH/8.D0/PI * DSQRT(LAMBDA(X1**2,X2**2))
-     .        * ( CS**2 * (1.D0-(X1+X2)**2) 
+     .        * ( CS**2 * (1.D0-(X1+X2)**2)
      .        + CP**2 * (1.D0-(X1-X2)**2) )
       ENDIF
       END
@@ -1203,8 +1218,8 @@ C C is the HVV coupling, Feynman rule = i C g_{munu}.
       IF ((MV1+MV2).GE.MH) THEN
          GAMVV = 0.D0
       ELSE
-         GAMVV = SV * C**2 * MH**3 / 64.D0/PI / MV1**2 / MV2**2 
-     .        * (1.D0 - 2.D0*K1 - 2.D0*K2 + 10.D0*K1*K2 + K1**2 + K2**2) 
+         GAMVV = SV * C**2 * MH**3 / 64.D0/PI / MV1**2 / MV2**2
+     .        * (1.D0 - 2.D0*K1 - 2.D0*K2 + 10.D0*K1*K2 + K1**2 + K2**2)
      .        * DSQRT(LAMBDA(K1,K2))
       ENDIF
       END
@@ -1244,7 +1259,7 @@ C Calls GAMVSTARH for singly off-shell decays when mH1 < mH2 + MW.
 C Compute the H1 -> H2 W on-shell width.
          GAMWH = GAMVH(MH1,MH2,MW,C)
       ELSE IF (MH1.GT.MH2.AND.OFFSHELL.EQ.1) THEN
-C Compute the H1 -> H2 W* singly off-shell width.  
+C Compute the H1 -> H2 W* singly off-shell width.
 C DV = 3/2 counts only one sign choice for the W*.
          DV = 3.D0/2.D0
          GAMWH = GAMVSTARH(DV,MH1,MH2,MW,C,V)
@@ -1268,7 +1283,7 @@ C Compute the H1 -> H2 Z on-shell width.
          GAMZH = GAMVH(MH1,MH2,MZ,C)
       ELSE IF (MH1.GT.MH2.AND.OFFSHELL.EQ.1) THEN
 C Compute the H1 -> H2 Z* singly off-shell width.
-         DV = 3.D0*(7.D0/12.D0 - 10.D0/9.D0*SW**2 + 40.D0/27.D0*SW**4) 
+         DV = 3.D0*(7.D0/12.D0 - 10.D0/9.D0*SW**2 + 40.D0/27.D0*SW**4)
          GAMZH = GAMVSTARH(DV,MH1,MH2,MZ,C,V)
       ELSE
          GAMZH = 0.D0
@@ -1300,9 +1315,9 @@ C Function for Gamma(H1 -> H2 V*) below threshold (singly off-shell).
 C C is the V* H1 H2* coupling, Feynman rule = i C (p1-p2)_{mu}.
 C Formula is taken from Djouadi et al, hep-ph/9511342, Eq. (43-46).
 C We correct the typing error in the kinematic function G_ij pointed
-C out in Akeroyd hep-ph/9806337 (last term should be +2 lambdaij/kj 
+C out in Akeroyd hep-ph/9806337 (last term should be +2 lambdaij/kj
 C instead of -2 lambdaij/kj).
-C Note that this function does not work when the 2-body decay V -> H1 H2 
+C Note that this function does not work when the 2-body decay V -> H1 H2
 C is possible: in that case we set the H1 -> V* H2 width to zero.
       IMPLICIT NONE
       DOUBLE PRECISION DV, MH1, MH2, MV, C, V
@@ -1319,8 +1334,8 @@ C is possible: in that case we set the H1 -> V* H2 width to zero.
          ATANARG = (KJ*(1.D0-KJ+KI) - LAMIJ)/(1.D0-KI)/DSQRT(LAMIJ)
          KINEMATIC = 0.25D0 * ( 2.D0*(-1.D0+KJ-KI) * DSQRT(LAMIJ)
      .        * (PI/2.D0 + DATAN(ATANARG))
-     .        + (LAMIJ - 2.D0*KI)*DLOG(KI) 
-     .        + (1.D0-KI)/3.D0*(5.D0*(1.D0+KI) 
+     .        + (LAMIJ - 2.D0*KI)*DLOG(KI)
+     .        + (1.D0-KI)/3.D0*(5.D0*(1.D0+KI)
      .        - 4.D0*KJ + 2.D0/KJ*LAMIJ))
          GAMVSTARH = COEFF * KINEMATIC
       ENDIF
@@ -1328,7 +1343,7 @@ C is possible: in that case we set the H1 -> V* H2 width to zero.
 
       DOUBLE PRECISION FUNCTION GAMHH(SH,MH1,MH2,MH3,G123)
 C Function for Gamma(H1 -> H2 H3)
-C SH is a symmetry factor: SH = 1/2 for H2 = H3; 
+C SH is a symmetry factor: SH = 1/2 for H2 = H3;
 C    SH = 1 for H2 != H3, including when H2/3 are h.c. of each other.
 C G123 is the H1 H2* H3* coupling, Feynman rule = -i G123.
       IMPLICIT NONE
@@ -1352,7 +1367,7 @@ C==================================================================
 
       SUBROUTINE HLCOUPS
 C Computes kappa_V, kappa_f, kappa_gamma, kappa_Zgamma,
-C Delta kappa_gamma, and Delta kappa_Zgamma for the lighter 
+C Delta kappa_gamma, and Delta kappa_Zgamma for the lighter
 C Higgs mass eigenstate h (of mass MHL).
 C INPUTS: common blocks LPARAMS, PHYSPARAMS
 C OUTPUTS: common block KAPPASL
@@ -1370,6 +1385,9 @@ C Common blocks:
      .     ALPHAEM,ALSMZ, VCB, VUS, VUB, GAMZ, GAMW
       COMMON/SM/V,MZ,MW,MTPOLE,MBMB,MCMC,MS,MTAU,MMU,
      .     ALPHAEM,ALSMZ,VCB,VUS,VUB,GAMZ,GAMW
+      DOUBLE PRECISION MH
+      INTEGER INPUTSET,Z2
+      COMMON/INPUT/MH,INPUTSET,Z2
 C Local variables:
       DOUBLE PRECISION VSM
       DOUBLE COMPLEX F0, F12, F1
@@ -1385,7 +1403,7 @@ C Local variables:
       SW = DSQRT(1.D0 - CW**2)
 
       VSM = DSQRT(VPHI**2 + 8.D0*VCHI**2)
-      KVL = DCOS(ALPHA)*VPHI/VSM 
+      KVL = DCOS(ALPHA)*VPHI/VSM
      .     - 8.D0/DSQRT(3.D0)*DSIN(ALPHA)*VCHI/VSM
       KFL = DCOS(ALPHA)*VSM/VPHI
 
@@ -1433,12 +1451,12 @@ C SM amplitude for the top loop:
 C SM amplitude for the W loop:
       LAMBDAW = 4.D0*MW**2/MZ**2
       AWZ = -CW/SW * (4.D0*(3.D0-SW**2/CW**2) * I2(TAUW,LAMBDAW)
-     .     + ((1.D0+2.D0/TAUW)*SW**2/CW**2 - (5.D0+2.D0/TAUW)) 
+     .     + ((1.D0+2.D0/TAUW)*SW**2/CW**2 - (5.D0+2.D0/TAUW))
      .     * I1(TAUW,LAMBDAW))
 C Amplitudes for the scalar loops:
       CZ11 = 1.D0/2.D0/SW/CW * (1.D0 - 2.D0*SW**2)
       CZ22 = 1.D0/SW/CW * (1.D0 - 2.D0*SW**2)
-      A3PZ = 2.D0*GHL33*CZ11/MH3**2 
+      A3PZ = 2.D0*GHL33*CZ11/MH3**2
      .     * I1(4.D0*MH3**2/MHL**2,4.D0*MH3**2/MZ**2)
       A5PZ = 2.D0*GHL55*CZ11/MH5**2
      .     * I1(4.D0*MH5**2/MHL**2,4.D0*MH5**2/MZ**2)
@@ -1490,12 +1508,12 @@ C Local variables:
       SW = DSQRT(1.D0 - CW**2)
 
       VSM = DSQRT(VPHI**2 + 8.D0*VCHI**2)
-      KVH = DSIN(ALPHA)*VPHI/VSM 
+      KVH = DSIN(ALPHA)*VPHI/VSM
      .     + 8.D0/DSQRT(3.D0)*DCOS(ALPHA)*VCHI/VSM
       KFH = DSIN(ALPHA)*VSM/VPHI
 
       MT = MTPOLE
-      
+
 C Loop-induced H -> gamma gamma coupling:
 C SM amplitude for the top loop:
       TAUT = 4.D0*MT**2/MHH**2
@@ -1505,7 +1523,7 @@ C SM amplitude for the W loop:
       AW = F1(TAUW)
 C Amplitudes for the scalar loops:
       GHH33 = 64.D0*LAMBDA1*DSIN(ALPHA)*VCHI**2*VPHI/VSM**2
-     .     + 8.D0/DSQRT(3.D0)*VPHI**2*VCHI/VSM**2 
+     .     + 8.D0/DSQRT(3.D0)*VPHI**2*VCHI/VSM**2
      .     *DCOS(ALPHA)*(LAMBDA3 + 3.D0*LAMBDA4)
      .     + 4.D0/DSQRT(3.D0)*VCHI*M1/VSM**2
      .     *(DCOS(ALPHA)*VCHI + DSQRT(3.D0)*DSIN(ALPHA)*VPHI)
@@ -1538,12 +1556,12 @@ C SM amplitude for the top loop:
 C SM amplitude for the W loop:
       LAMBDAW = 4.D0*MW**2/MZ**2
       AWZ = -CW/SW * (4.D0*(3.D0-SW**2/CW**2) * I2(TAUW,LAMBDAW)
-     .     + ((1.D0+2.D0/TAUW)*SW**2/CW**2 - (5.D0+2.D0/TAUW)) 
+     .     + ((1.D0+2.D0/TAUW)*SW**2/CW**2 - (5.D0+2.D0/TAUW))
      .     * I1(TAUW,LAMBDAW))
 C Amplitudes for the scalar loops:
       CZ11 = 1.D0/2.D0/SW/CW * (1.D0 - 2.D0*SW**2)
       CZ22 = 1.D0/SW/CW * (1.D0 - 2.D0*SW**2)
-      A3PZ = 2.D0*GHH33*CZ11/MH3**2 
+      A3PZ = 2.D0*GHH33*CZ11/MH3**2
      .     * I1(4.D0*MH3**2/MHH**2,4.D0*MH3**2/MZ**2)
       A5PZ = 2.D0*GHH55*CZ11/MH5**2
      .     * I1(4.D0*MH5**2/MHH**2,4.D0*MH5**2/MZ**2)
@@ -1585,7 +1603,7 @@ C Local variables:
       VSM = DSQRT(VPHI**2 + 8.D0*VCHI**2)
       KW3 = 0.D0
       KZ3 = 0.D0
-      KF3 = 2.D0*DSQRT(2.D0)*VCHI/VPHI 
+      KF3 = 2.D0*DSQRT(2.D0)*VCHI/VPHI
 
       RETURN
       END
@@ -1624,7 +1642,7 @@ C Functions for loop integrals used by HLCOUPS and HHCOUPS:
 
       DOUBLE COMPLEX FUNCTION F0(TAU)
 C This is the scalar loop function F_0 from the Higgs Hunter's Guide
-C discussion of H -> gamma gamma.  Its value asymptotes to -1/3 
+C discussion of H -> gamma gamma.  Its value asymptotes to -1/3
 C in the limit of tau >> 1.  TAU should be 4*ms^2/mH^2.
       IMPLICIT NONE
       DOUBLE PRECISION TAU
@@ -1644,7 +1662,7 @@ C in the limit of tau >> 1.  TAU should be 4*mf^2/mH^2.
 
       DOUBLE COMPLEX FUNCTION FA12(TAU)
 C This is the fermion loop function F^A_{1/2} for the pseudoscalar
-C from the Higgs Hunter's Guide Appendix C.  
+C from the Higgs Hunter's Guide Appendix C.
 C TAU should be 4*mf^2/mA^2.
       IMPLICIT NONE
       DOUBLE PRECISION TAU
@@ -1653,7 +1671,7 @@ C TAU should be 4*mf^2/mA^2.
       END
 
       DOUBLE COMPLEX FUNCTION F1(TAU)
-C This is the spin-1 boson loop function F_1 from the Higgs Hunter's 
+C This is the spin-1 boson loop function F_1 from the Higgs Hunter's
 C Guide discussion of H -> gamma gamma.  Its value asymptotes to 7 when
 C tau >> 1.  TAU should be 4*MW^2/MH^2.
       IMPLICIT NONE
@@ -1717,4 +1735,3 @@ C contributions to h -> Z gamma.
       DOUBLE COMPLEX FF
       I2 = -A*B/2.D0/(A-B) * (FF(A) - FF(B))
       END
-
