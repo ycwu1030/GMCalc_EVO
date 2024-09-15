@@ -471,7 +471,7 @@ c--ADD By Y. Wu @ 26 Feb 2018
       WRITE(90,77) 1, RxH5NGAGA, "H5NGAGA             "
       WRITE(90,77) 2, RxH5NZGA, "H5NZGA              "
       WRITE(90,77) 3, RxH3NGAGA, "H3NGAGA             "
-      WRITE(90,77) 4, RxH3NZGA, "H3NZGA            "
+      WRITE(90,77) 4, RxH3NZGA, "H3NZGA              "
       WRITE(90,77) 5, RxH3NGG, "H3NGG               "
       WRITE(90,77) 6, RxHHGAGA, "HHGAGA              "
       WRITE(90,77) 7, RxHHZGA, "HHZGA               "
