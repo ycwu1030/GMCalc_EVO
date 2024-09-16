@@ -1,12 +1,12 @@
 C=======================================================================
-C GMCALC: a calculator for the Georgi-Machacek model 
+C GMCALC: a calculator for the Georgi-Machacek model
 C (with the most general custodial-symmetry-invariant scalar potential)
 C http://people.physics.carleton.ca/~logan/gmcalc/
 C========================================================================
 
       PROGRAM GMSCAN
 C Program to perform a scan over the allowed GM model parameter ranges,
-C subject to theoretical and indirect experimental constraints, with 
+C subject to theoretical and indirect experimental constraints, with
 C mh set to 125 GeV.  The user sets the maximum value of MU3SQ.
 C The output consists of a representative selection
 C of masses, couplings, and decay branching ratios.  The full set of
@@ -34,12 +34,13 @@ C Common blocks:
       DOUBLE PRECISION MH
       INTEGER INPUTSET
       COMMON/INPUT/MH,INPUTSET
+      INTEGER IZ2
       DOUBLE PRECISION IMHL, IMHH, IMH3, IMH5, ISH, ISA
-      COMMON/INPUT3/IMHL,IMHH,IMH3,IMH5,ISH,ISA
+      COMMON/INPUT3/IMHL,IMHH,IMH3,IMH5,ISH,ISA,IZ2
 C Common block for indirect constraints
       DOUBLE PRECISION RBSMM, SPARAM
       INTEGER BSMMOK, SPAROK, BSGAMLOOSEOK, BSGAMTIGHTOK
-      COMMON/INDIR/RBSMM, SPARAM, BSMMOK, SPAROK, 
+      COMMON/INDIR/RBSMM, SPARAM, BSMMOK, SPAROK,
      .     BSGAMLOOSEOK, BSGAMTIGHTOK
 C Common block for direct search constraints (including recasts)
       INTEGER WWJJOK, LSDMOK, H5PPOK, ATLAS8TEVGAGAOK
@@ -50,26 +51,26 @@ C Common block for direct search constraints (including recasts)
      .     DYHPPOK
 C Common blocks for decay BRs and total widths
       DOUBLE PRECISION HLBRB, HLBRTA, HLBRMU, HLBRS, HLBRC, HLBRT,
-     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ, 
+     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ,
      .     HLBRWH3P, HLBRZH3N,
      .     HLBRH3N, HLBRH3P, HLBRH5N, HLBRH5P, HLBRH5PP, HLWDTH
       COMMON/HLBRS/HLBRB, HLBRTA, HLBRMU, HLBRS, HLBRC, HLBRT,
-     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ, 
+     .     HLBRG, HLBRGA, HLBRZGA, HLBRW, HLBRZ,
      .     HLBRWH3P, HLBRZH3N,
      .     HLBRH3N, HLBRH3P, HLBRH5N, HLBRH5P, HLBRH5PP, HLWDTH
       DOUBLE PRECISION HHBRB, HHBRTA, HHBRMU, HHBRS, HHBRC, HHBRT,
-     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ, 
+     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ,
      .     HHBRWH3P, HHBRZH3N,
-     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP, 
+     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP,
      .     HHWDTH
       COMMON/HHBRS/HHBRB, HHBRTA, HHBRMU, HHBRS, HHBRC, HHBRT,
-     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ, 
+     .     HHBRG, HHBRGA, HHBRZGA, HHBRW, HHBRZ,
      .     HHBRWH3P, HHBRZH3N,
-     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP, 
+     .     HHBRHL, HHBRH3N, HHBRH3P, HHBRH5N, HHBRH5P, HHBRH5PP,
      .     HHWDTH
       DOUBLE PRECISION H3NBRB, H3NBRTA, H3NBRMU, H3NBRS, H3NBRC, H3NBRT,
      .     H3NBRZHL, H3NBRZHH, H3NBRZH5N, H3NBRWH5P,
-     .     H3NBRG, H3NBRGA, H3NBRZGA, 
+     .     H3NBRG, H3NBRGA, H3NBRZGA,
      .     H3NWDTH
       COMMON/H3NBRS/H3NBRB, H3NBRTA, H3NBRMU, H3NBRS, H3NBRC, H3NBRT,
      .     H3NBRZHL, H3NBRZHH, H3NBRZH5N, H3NBRWH5P,
@@ -86,16 +87,16 @@ C Common blocks for decay BRs and total widths
      .     H3PBRWGA,
      .     H3PWDTH
       DOUBLE PRECISION H5NBRGA, H5NBRZGA, H5NBRW, H5NBRZ,
-     .     H5NBRZH3N, H5NBRWH3P, 
+     .     H5NBRZH3N, H5NBRWH3P,
      .     H5NBRH3N, H5NBRH3P,
      .     H5NWDTH
       COMMON/H5NBRS/H5NBRGA, H5NBRZGA, H5NBRW, H5NBRZ,
-     .     H5NBRZH3N, H5NBRWH3P, 
+     .     H5NBRZH3N, H5NBRWH3P,
      .     H5NBRH3N, H5NBRH3P,
      .     H5NWDTH
-      DOUBLE PRECISION H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN, 
+      DOUBLE PRECISION H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN,
      .     H5PBRWGA, H5PWDTH
-      COMMON/H5PBRS/H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN, 
+      COMMON/H5PBRS/H5PBRWZ, H5PBRZH3P, H5PBRWH3N, H5PBRH3PN,
      .     H5PBRWGA, H5PWDTH
       DOUBLE PRECISION H5PPBRWW, H5PPBRWH3, H5PPBRH3P, H5PPWDTH
       COMMON/H5PPBRS/H5PPBRWW, H5PPBRWH3, H5PPBRH3P, H5PPWDTH
@@ -132,36 +133,36 @@ C==================================================================
 C Parameter scan will run until NPOINTS good points are found:
       NPOINTS = 10000
 C==================================================================
-C Set the light Higgs mass and the maximum value of sqrt(MU3SQ) 
-C to be scanned over.  
+C Set the light Higgs mass and the maximum value of sqrt(MU3SQ)
+C to be scanned over.
       MH = 125.D0
       MU3MAX = 1200.D0
 C==================================================================
 
 C============= flags that should not be changed lightly ===========
-C The following flags must be set this way for the scans to 
-C function properly.  INPUTMODE = 0 reads the parameters from the 
-C main program.  SILENT = 1 avoids dumping details of each of the 
+C The following flags must be set this way for the scans to
+C function properly.  INPUTMODE = 0 reads the parameters from the
+C main program.  SILENT = 1 avoids dumping details of each of the
 C scan points to the screen.
       INPUTMODE = 0
       SILENT = 1
 C==================================================================
-C Since in our scan we want to fix mh = 125 GeV, we must use an 
+C Since in our scan we want to fix mh = 125 GeV, we must use an
 C INPUTSET in which this is taken as an input: i.e., 2, 3, 4, 5, or 6.
       INPUTSET = 6
 C==================================================================
-      
+
       CALL LTSTARTER
       OPEN (UNIT = 90, FILE = 'scan-output.data')
       WRITE (90,*) "# m5    sH     lambda2    lambda3    ",
      .     "lambda4     M1      M2     ",
-     .     "lambda5     m3      mH      kappaV      kappaf      ", 
+     .     "lambda5     m3      mH      kappaV      kappaf      ",
      .     "kappagam    lambda1     mu3sq     M11sq    M12sq    M22sq",
      .     "      sin(alpha)"
 
 C============================================================
 C Printing a comment to the screen here because this is NOT a
-C general scan, rather it is a scan of the low-m5 benchmark as     
+C general scan, rather it is a scan of the low-m5 benchmark as
 C defined in arXiv:2003.05536.
       PRINT *, "Performing a scan over the low-m5 benchmark."
       PRINT *, "For a general scan, adjust the scan ranges"
@@ -181,20 +182,21 @@ C Start the loop over scan points
 C============ setting up the scan ranges ==========================
 c      X(1) = -200.D0 + X(1)*(200.D0+MU3MAX)
 c      MU3SQ = X(1)*DABS(X(1))
+      IZ2 = 0
       IMHL = MH
       IMH5 = 50.D0 + X(1)*(550.D0-50.D0)
       ISH = X(6)
 c      LAMBDA3 = -0.5D0*PI + X(3)*11.D0/10.D0*PI
 c      IF (LAMBDA3.LT.0) THEN
-c         LAMBDA4 = -LAMBDA3 + X(4)*(4.D0/11.D0*LAMBDA3 
+c         LAMBDA4 = -LAMBDA3 + X(4)*(4.D0/11.D0*LAMBDA3
 c     .        + 2.D0/11.D0*PI)
 c      ELSE
-c         LAMBDA4 = -LAMBDA3/3.D0 + X(4)*(-10.D0/33.D0*LAMBDA3 
+c         LAMBDA4 = -LAMBDA3/3.D0 + X(4)*(-10.D0/33.D0*LAMBDA3
 c     .        + 2.D0/11.D0*PI)
 c      ENDIF
       LAMBDA3 = -1.5D0
       LAMBDA4 = 1.5D0
-c      LAMBDA2MAX = DSQRT(4.D0*PI**2 
+c      LAMBDA2MAX = DSQRT(4.D0*PI**2
 c     .     - 2.D0*PI*(7.D0*LAMBDA3 + 11.D0*LAMBDA4))/3.D0
 c      LAMBDA2 = -LAMBDA2MAX + X(2)*2.D0*LAMBDA2MAX
 c      LAMBDA2 = X(2)*LAMBDA2MAX
@@ -281,8 +283,8 @@ C Calculate and apply the hard-coded direct-search constraints:
                   IF (ATLAS8TEVGAGAOK*ATLAS13TEVDYGAGAOK
      .                 *ATLAS13TEVVBFGAGAOK.EQ.1) THEN
                WRITE (90, *) MH5, DSQRT(8.D0)*VCHI/V, LAMBDA2, LAMBDA3,
-     .              LAMBDA4, M1, M2, LAMBDA5, MH3, MHOTHER, KV, KF, 
-     .              KGAM, LAMBDA1, MU3SQ, M11SQ, M12SQ, M22SQ, 
+     .              LAMBDA4, M1, M2, LAMBDA5, MH3, MHOTHER, KV, KF,
+     .              KGAM, LAMBDA1, MU3SQ, M11SQ, M12SQ, M22SQ,
      .              DSIN(ALPHA)
                   ENDIF
                ENDIF
@@ -301,6 +303,3 @@ C End of the loop over scan points
 
       STOP
       END
-
-
-
