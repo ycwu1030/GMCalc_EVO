@@ -355,7 +355,7 @@ C Subroutine to generate the MG5 param_card for use with the FeynRules
 C UFO model: LO EFT version
 C=====================================================================
 
-      SUBROUTINE WRITE_PARAM_CARD_EFT_LO
+      SUBROUTINE WRITE_PARAM_CARD_EFT
       IMPLICIT NONE
 C Common blocks:
       DOUBLE PRECISION MU2SQ,MU3SQ,LAMBDA1,LAMBDA2,LAMBDA3,LAMBDA4,
@@ -431,7 +431,8 @@ C Common blocks:
       DOUBLE PRECISION TOPBRW, TOPBRH3P, TOPWDTH
       COMMON/TOPBRS/TOPBRW, TOPBRH3P, TOPWDTH
       CHARACTER*100 MGFILENAME
-      COMMON/IONAMES/MGFILENAME
+      INTEGER LIGHTMASSLESS
+      COMMON/IOCONTROL/MGFILENAME,LIGHTMASSLESS
 C Local variables:
       DOUBLE PRECISION MCPOLE, MBPOLE, TANTHETAH
 C Functions to be called:
@@ -507,33 +508,45 @@ c--End ADD
       WRITE(90,5) "INFORMATION FOR MASS            "
       WRITE(90,4)
       WRITE(90,6) "Block mass                      "
+      IF (LIGHTMASSLESS .EQ. 0) THEN
       WRITE(90,7) 1, MDPOLE, "MD            "
       WRITE(90,7) 2, MUPOLE, "MU            "
       WRITE(90,7) 3, MS,     "MS            "
       WRITE(90,7) 4, MCPOLE, "MC            "
+      ENDIF
       WRITE(90,7) 5, MBPOLE, "MB            "
       WRITE(90,7) 6, MTPOLE, "MT            "
+      IF (LIGHTMASSLESS .EQ. 0) THEN
       WRITE(90,7) 11, MELEC, "Me            "
       WRITE(90,7) 13, MMU,   "MM            "
+      ENDIF
       WRITE(90,7) 15, MTAU,  "MTA           "
       WRITE(90,7) 23, MZ,    "MZ            "
-      WRITE(90,7) 25, MHL,   "Mh            "
+      WRITE(90,7) 25, MHL,   "MHL            "
+      WRITE(90,7) 257, MH5,  "MH5           "
       WRITE(90,3) "Dependent parameters, given by model restrictions."
       WRITE(90,3) "MG5 ignores these values but they are important   "
       WRITE(90,3) "for interfacing the output of MG5 to external     "
       WRITE(90,3) "programs such as Pythia.                          "
+      IF (LIGHTMASSLESS .EQ. 1) THEN
+      WRITE(90,7) 1, 0.D0, "MD            "
+      WRITE(90,7) 2, 0.D0, "MU            "
+      WRITE(90,7) 3, 0.D0, "MS            "
+      WRITE(90,7) 4, 0.D0, "MC            "
+      WRITE(90,7) 11, 0.D0, "Me            "
+      WRITE(90,7) 13, 0.D0, "MM            "
+      ENDIF
       WRITE(90,7) 12, 0.D0, "ve            "
       WRITE(90,7) 14, 0.D0, "vm            "
       WRITE(90,7) 16, 0.D0, "vt            "
       WRITE(90,7) 21, 0.D0, "g             "
       WRITE(90,7) 22, 0.D0, "a             "
       WRITE(90,7) 24, MW,   "w+   (derived)"
-      WRITE(90,7) 252, MHH, "H    (derived)"
+      WRITE(90,7) 252, MHH, "HH   (derived)"
       WRITE(90,7) 253, MH3, "H3p  (derived)"
       WRITE(90,7) 255, MH5, "H5pp (derived)"
       WRITE(90,7) 254, MH3, "H3z  (derived)"
       WRITE(90,7) 256, MH5, "H5p  (derived)"
-      WRITE(90,7) 257, MH5, "H5z  (derived)"
       WRITE(90,*)
 
       WRITE(90,4)
@@ -544,8 +557,7 @@ c--End ADD
       WRITE(90,7) 2, LAMBDA3, "lam3          "
       WRITE(90,7) 3, LAMBDA4, "lam4          "
       WRITE(90,7) 4, LAMBDA5, "lam5          "
-      WRITE(90,7) 5, M1,      "M1coeff       "
-      WRITE(90,7) 6, M2,      "M2coeff       "
+      WRITE(90,7) 5, M2,      "M2coeff       "
       WRITE(90,*)
 
       WRITE(90,4)
@@ -568,14 +580,18 @@ c--End ADD
       WRITE(90,5) "INFORMATION FOR YUKAWA          "
       WRITE(90,4)
       WRITE(90,6) "Block yukawa                    "
+      IF (LIGHTMASSLESS .EQ. 0) THEN
       WRITE(90,7) 1, MDPOLE, "ymdo          "
       WRITE(90,7) 2, MUPOLE, "ymup          "
       WRITE(90,7) 3, MS,     "yms           "
       WRITE(90,7) 4, MCPOLE, "ymc           "
+      ENDIF
       WRITE(90,7) 5, MBPOLE, "ymb           "
       WRITE(90,7) 6, MTPOLE, "ymt           "
+      IF (LIGHTMASSLESS .EQ. 0) THEN
       WRITE(90,7) 11, MELEC, "yme           "
       WRITE(90,7) 13, MMU,   "ymm           "
+      ENDIF
       WRITE(90,7) 15, MTAU,  "ymtau         "
       WRITE(90,*)
 
@@ -972,10 +988,10 @@ c--End ADD
       WRITE(90,3) "programs such as Pythia.                          "
       WRITE(90,7) 1, 0.D0, "MD            "
       WRITE(90,7) 2, 0.D0, "MU            "
-      WRITE(90,7) 3, 0.D0,     "MS            "
+      WRITE(90,7) 3, 0.D0, "MS            "
       WRITE(90,7) 4, 0.D0, "MC            "
       WRITE(90,7) 11, 0.D0, "Me            "
-      WRITE(90,7) 13, 0.D0,   "MM            "
+      WRITE(90,7) 13, 0.D0, "MM            "
       WRITE(90,7) 12, 0.D0, "ve            "
       WRITE(90,7) 14, 0.D0, "vm            "
       WRITE(90,7) 16, 0.D0, "vt            "
