@@ -431,8 +431,8 @@ C Common blocks:
       DOUBLE PRECISION TOPBRW, TOPBRH3P, TOPWDTH
       COMMON/TOPBRS/TOPBRW, TOPBRH3P, TOPWDTH
       CHARACTER*100 MGFILENAME
-      INTEGER LIGHTMASSLESS
-      COMMON/IOCONTROL/MGFILENAME,LIGHTMASSLESS
+      INTEGER LIGHTMASSLESS,Z2RESTRICT
+      COMMON/IOCONTROL/MGFILENAME,LIGHTMASSLESS,Z2RESTRICT
 C Local variables:
       DOUBLE PRECISION MCPOLE, MBPOLE, TANTHETAH
 C Functions to be called:
@@ -469,6 +469,7 @@ c--ADD By Y. Wu @ 26 Feb 2018
       WRITE(90,5) "INFORMATION FOR NEUTRALFORMFACTORS   "
       WRITE(90,4)
       WRITE(90,6) "Block NEUTRALFORMFACTORS               "
+      IF (Z2RESTRICT .EQ. 0) THEN
       WRITE(90,77) 1, RxH5NGAGA, "H5NGAGA             "
       WRITE(90,77) 2, RxH5NZGA, "H5NZGA              "
       WRITE(90,77) 3, RxH3NGAGA, "H3NGAGA             "
@@ -477,11 +478,13 @@ c--ADD By Y. Wu @ 26 Feb 2018
       WRITE(90,77) 6, RxHHGAGA, "HHGAGA              "
       WRITE(90,77) 7, RxHHZGA, "HHZGA               "
       WRITE(90,77) 8, RxHHGG, "HHGG                "
+      ENDIF
       WRITE(90,77) 9, RxHLGAGA, "HLGAGA              "
       WRITE(90,77) 10, RxHLZGA, "HLZGA               "
       WRITE(90,77) 11, RxHLGG, "HLGG                "
       WRITE(90,*)
 
+      IF (Z2RESTRICT .EQ. 0) THEN
       WRITE(90,4)
       WRITE(90,5) "INFORMATION FOR FORMFACTORS     "
       WRITE(90,4)
@@ -501,6 +504,7 @@ c--ADD By Y. Wu @ 26 Feb 2018
       WRITE(90,77) 3, IxH3PWGA, "IxH3PWGA            "
       WRITE(90,77) 4, IxH3PWGATILDE, "IxH3PWGATILDE       "
       WRITE(90,*)
+      ENDIF
 
 c--End ADD
 
@@ -557,7 +561,9 @@ c--End ADD
       WRITE(90,7) 2, LAMBDA3, "lam3          "
       WRITE(90,7) 3, LAMBDA4, "lam4          "
       WRITE(90,7) 4, LAMBDA5, "lam5          "
+      IF (Z2RESTRICT .EQ. 0) THEN
       WRITE(90,7) 5, M2,      "M2coeff       "
+      ENDIF
       WRITE(90,*)
 
       WRITE(90,4)
@@ -569,12 +575,14 @@ c--End ADD
       WRITE(90,7) 3, ALSMZ,        "aS            "
       WRITE(90,*)
 
+      IF (Z2RESTRICT .EQ. 0) THEN
       WRITE(90,4)
       WRITE(90,5) "INFORMATION FOR VEV             "
       WRITE(90,4)
       WRITE(90,6) "Block vev                       "
       WRITE(90,7) 1, TANTHETAH, "tanth         "
       WRITE(90,*)
+      ENDIF
 
       WRITE(90,4)
       WRITE(90,5) "INFORMATION FOR YUKAWA          "

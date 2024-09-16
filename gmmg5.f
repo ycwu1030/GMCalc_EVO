@@ -25,7 +25,8 @@ C Common blocks:
       INTEGER OFFSHELL, QCDCORRS
       COMMON/DECAYFLAGS/OFFSHELL, QCDCORRS
       CHARACTER*100 MGFILENAME
-      COMMON/IONAMES/MGFILENAME
+      INTEGER LIGHTMASSLESS,Z2RESTRICT
+      COMMON/IOCONTROL/MGFILENAME,LIGHTMASSLESS,Z2RESTRICT
       CALL PRINT_BANNER
 C==================================================================
 C This initialization call must always come before anything else!
@@ -133,25 +134,15 @@ C In order to get the EFT parameters and the decay tables, need to call:
             CALL H3COUPS
             CALL H5COUPS
             CALL CALCDECAYS
-            MGFILENAME="param_card_LO.dat"
-            CALL WRITE_PARAM_CARD_LO
-            MGFILENAME="param_card_NLO.dat"
-            CALL WRITE_PARAM_CARD_NLO
-            MGFILENAME="param_card_EFT_LO.dat"
-            CALL WRITE_PARAM_CARD_EFT_LO
-            MGFILENAME="param_card_EFT_NLO.dat"
-            CALL WRITE_PARAM_CARD_EFT_NLO
+            MGFILENAME="param_card_EFT.dat"
+            LIGHTMASSLESS=1
+            Z2RESTRICT=0
+            CALL WRITE_PARAM_CARD_EFT
             PRINT *
-            PRINT *, "Three files written: "
-            PRINT *, " * param_card-LO.dat, for use with MadGraph5"
-            PRINT *, " * param_card-NLO.dat, for use with ",
-     .           "MadGraph5_aMC@NLO"
-            PRINT *, " * param_card_EFT_LO.dat, ",
+            PRINT *, "One parameter file written: "
+            PRINT *, " * param_card_EFT.dat, ",
      .           "for use with the GM model with EFT couplings ",
-     .           "in MadGraph5"
-            PRINT *, " * param_card_EFT_NLO.dat, ",
-     .           "for use with the GM model with EFT couplings ",
-     .           "in MadGraph5_aMC@NLO"
+     .           "in MadGraph5 with either LO or NLO UFO"
             PRINT *, "Rename the desired file to param_card.dat"
             PRINT *, "and move it to your MadGraph Cards directory."
             PRINT *, "Get the Georgi-Machacek model UFO files at"
